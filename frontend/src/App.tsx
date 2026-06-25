@@ -1,29 +1,19 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import { fetchAPI } from "./service.ts";
+import './App.module.css';
+import {Outlet} from "react-router-dom";
+import Navbar from "./components/Navbar.tsx";
+import styles from "./App.module.css";
 
-function App() {
-    const [mensagem, setMensagem] = useState<string>('');
-
-    useEffect(() => {
-        async function chama() {
-            try {
-                const api = await fetchAPI();
-                setMensagem(api); // Salva o resultado no estado
-                console.log("Resposta da API:", api);
-            } catch (error) {
-                console.error("Erro na requisição:", error);
-            }
-        }
-
-        void chama();
-    }, []);
+export default function App() {
 
     return (
-        <>
-            <h1>{mensagem ? mensagem : "Carregando..."}</h1>
-        </>
+        <div className={styles.layout}>
+            <Navbar/>
+            <img src="/assets/logo.png" alt=""></img>
+            <main style={{ display: "flex", width:"100vw", justifyContent:"flex-start", padding: "2rem" , }}>
+    
+
+                <Outlet/>
+            </main>
+        </div>
     )
 }
-
-export default App;
