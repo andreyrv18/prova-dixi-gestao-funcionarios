@@ -1,0 +1,34 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    height: 100vh;
+    padding: 20px;
+
+    background: var(--primary-color);
+
+}
+
+.link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    color: var(--bg);
+    padding: 5px;
+
+    border: 1px solid var(--accent);
+    text-decoration: none;
+}
+
+.link img {
+    height: 75px;
+    width: 60px;
+    margin-bottom: 3em;
+}
+
+.linha {
+    width: 100%;
+}
