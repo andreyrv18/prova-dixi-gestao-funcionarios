@@ -4,3 +4,5 @@
 /.idea/modules.xml
 /.idea/prova-dixi-gestao-funcionarios.iml
 /.idea/vcs.xml
+
+.env
