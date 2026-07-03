@@ -9,3 +9,4 @@ ${AnsiColor.BRIGHT_BLUE}
 ${AnsiStyle.NORMAL}
 
 Versão Spring Boot: ${spring-boot.version}
+Versão da API ${application.formatted-version}
