@@ -9,8 +9,8 @@ export default function App() {
         <div className={styles.layout}>
             <Navbar/>
             <img src="/assets/logo.png" alt=""></img>
-            <main style={{ display: "flex", width:"100vw", justifyContent:"flex-start", padding: "2rem" , }}>
-    
+            <main style={{display: "flex", width: "100vw", justifyContent: "flex-start", padding: "2rem",}}>
+
 
                 <Outlet/>
             </main>
