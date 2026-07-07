@@ -1,7 +1,12 @@
+import {ptBR} from "../locales/pt-BR.ts";
+
 function DepartamentoPage() {
     return (
-        <div>
-            <h1>Departamento</h1>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+            <span className="titulo" >{ptBR.paginaDepartamento.titulo}</span>
+            <span className="tituloModal" >{ptBR.paginaDepartamento.subtitulo}</span>
+
+
         </div>
     );
 }
