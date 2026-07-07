@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
 import {createBrowserRouter, RouterProvider,} from "react-router";
 import App from "./App.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
@@ -9,6 +8,7 @@ import DepartamentoPage from "./pages/DepartamentoPage.tsx";
 import CargoPage from "./pages/CargoPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import {fetchAPI} from "./service.ts";
+import "./index.css"
 
 const router = createBrowserRouter([
     {
