@@ -1,0 +1,27 @@
+.tabela {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.linha {
+    align-items: center;
+    border-bottom: 1px solid var(--outline);
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 40px 1fr 1fr;
+    padding: 8px 32px 8px 16px;
+}
+
+.linhaCabecalho {
+    background-color: var(--outline);
+    color: var(--azul-base);
+    font-weight: var(--sans-bold);
+
+}
+
+.corpo {
+    align-items: center;
+    font-size: 24px;
+    padding: 8px 32px 8px 16px;
+}
