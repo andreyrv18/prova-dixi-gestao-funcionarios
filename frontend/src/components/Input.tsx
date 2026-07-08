@@ -1,32 +1,29 @@
 import React from "react";
-import style from "./Card.module.css";
-
+import style from "./input.module.css";
 
 interface InputTypes<T extends string> {
-    dataTest: T,
-    id: string,
-    labelName: string,
-    name: string,
-    onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    value: string,
-    type: string,
-    placeholder: string,
-
+    dataTest: T;
+    id: string;
+    labelName: string;
+    name: string;
+    onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    value: string;
+    type: string;
+    placeholder: string;
 }
 
-
 function Input<T extends string>({
-                                     dataTest,
-                                     id,
-                                     labelName,
-                                     name,
-                                     onInputChange,
-                                     value,
-                                     type,
-                                     placeholder
-                                 }: InputTypes<T>) {
+    dataTest,
+    id,
+    labelName,
+    name,
+    onInputChange,
+    value,
+    type,
+    placeholder,
+}: InputTypes<T>) {
     return (
-        <label htmlFor={id} className="">
+        <label htmlFor={id} className={style.label}>
             {labelName}
             <input
                 className={style.input}
