@@ -1,9 +1,9 @@
 :root {
-    /* Cores*/
+    /* Cores */
     --azul-base: #3379bc;
     --azul-hover: #40a5dd;
     --azul-leve: #C8E5F4;
-    --background: #FFFFFF;
+    --background: #FFF;
     --background-2: #F9FAFA;
     --outline: #EBEDEE;
     --trancado-ou-explicativo: #C8C8C8;
@@ -11,38 +11,29 @@
     --titulo-de-campo: #9B9B9B;
     --corpo-de-texto: #7A7A7A;
     --tooltip: #525252;
-    --texto-destaque: #000000;
-
+    --texto-destaque: #000;
     /* Tamanho das fontes */
-
     --titulo-de-pagina: 35px;
     --titulo-de-modal: 20px;
     --subtitulo: 16px;
     --titulo-de-campo-de-text: 10px;
     --interior-de-campo-de-texto: 14px;
     --texto-de-botao: 14px;
-
     /* Fonte */
     --sans: open-sans-regular;
     --sans-semibold: open-sans-semibold;
     --sans-bold: open-sans-bold;
-
-
-
-    color-scheme: light dark;
-    color: var(--texto-destaque);
     background: var(--background);
-    font-synthesis: none;
-
-    text-rendering: optimizeLegibility;
+    color: var(--texto-destaque);
+    color-scheme: light dark;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
-    @media (max-width: 1024px) {
+    font-synthesis: none;
+    text-rendering: optimizelegibility;
+    @media (width <= 1024px) {
         font-size: 16px;
     }
 }
-
 @media (prefers-color-scheme: dark) {
     :root {
         --azul-base: #3379bc;
@@ -56,39 +47,38 @@
         --titulo-de-campo: #B3B3B3;
         --corpo-de-texto: #E0E0E0;
         --tooltip: #2A2A2A;
-        --texto-destaque: #FFFFFF;
+        --texto-destaque: #FFF;
     }
 
 
 }
+/* #root { */
+/*    width: 1126px; */
+/*    max-width: 100%; */
+/*    margin: 0 auto; */
+/*    text-align: center; */
+/*    border-inline: 1px solid var(--border); */
+/*    min-height: 100svh; */
+/*    display: flex; */
+/*    flex-direction: column; */
+/*    box-sizing: border-box; */
+/* } */
 
-/*#root {*/
-/*    width: 1126px;*/
-/*    max-width: 100%;*/
-/*    margin: 0 auto;*/
-/*    text-align: center;*/
-/*    border-inline: 1px solid var(--border);*/
-/*    min-height: 100svh;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    box-sizing: border-box;*/
-/*}*/
 
-
-.titulo  {
+.titulo {
+    color: var(--texto-destaque);
     font-size: var(--titulo-de-pagina);
     font-weight: var(--sans-bold);
-    color: var(--texto-destaque);
 }
 
 .tituloModal {
+    color: var(--texto-destaque);
     font-size: var(--titulo-de-modal);
     font-weight: var(--sans-bold);
-    color: var(--texto-destaque);
 }
 
 .subtitulo {
+    color: var(--texto-destaque);
     font-size: var(--subtitulo);
     font-weight: var(--sans-semibold);
-    color: var(--texto-destaque);
 }

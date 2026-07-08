@@ -1,47 +1,46 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import {createBrowserRouter, RouterProvider,} from "react-router";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import App from "./App.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import FuncionariosPage from "./pages/FuncionariosPage.tsx";
 import DepartamentoPage from "./pages/DepartamentoPage.tsx";
 import CargoPage from "./pages/CargoPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
-import {fetchAPI} from "./service.ts";
-import "./index.css"
+import { fetchAPI } from "./service.ts";
+import "./index.css";
 
 const router = createBrowserRouter([
     {
-
         path: "/",
-        element: <App/>,
-        errorElement: <ErrorPage/>,
+        element: <App />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: "/home",
                 loader: async () => {
-                    return {records: await fetchAPI()};
+                    return { records: await fetchAPI() };
                 },
-                element: <HomePage/>,
-
-
+                element: <HomePage />,
             },
             {
-                path: "/funcionario", element: <FuncionariosPage/>
+                path: "/funcionario",
+                element: <FuncionariosPage />,
             },
             {
-                path: "/departamento", element: <DepartamentoPage/>
+                path: "/departamento",
+                element: <DepartamentoPage />,
             },
             {
-                path: "/cargo", element: <CargoPage/>
-            }
-
-        ]
+                path: "/cargo",
+                element: <CargoPage />,
+            },
+        ],
     },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <RouterProvider router={router}/>
-    </React.StrictMode>
+        <RouterProvider router={router} />
+    </React.StrictMode>,
 );
