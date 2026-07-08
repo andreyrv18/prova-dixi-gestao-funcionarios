@@ -1,0 +1,19 @@
+.cabecalho {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.titulos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.botoes {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
