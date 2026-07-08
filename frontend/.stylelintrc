@@ -7,6 +7,12 @@
   ],
   "rules": {
     "order/properties-alphabetical-order": true,
+    "selector-class-pattern": [
+      "^[a-z][a-zA-Z0-9]*$",
+      {
+        "resolveNestedSelectors": true
+      }
+    ],
     "declaration-empty-line-before": "never",
     "at-rule-empty-line-before": "never",
     "custom-property-empty-line-before": "never",
