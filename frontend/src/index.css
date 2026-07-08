@@ -16,13 +16,13 @@
     --titulo-de-pagina: 35px;
     --titulo-de-modal: 20px;
     --subtitulo: 16px;
-    --titulo-de-campo-de-text: 10px;
+    --titulo-de-campo-de-texto: 10px;
     --interior-de-campo-de-texto: 14px;
     --texto-de-botao: 14px;
     /* Fonte */
-    --sans: open-sans-regular;
-    --sans-semibold: open-sans-semibold;
-    --sans-bold: open-sans-bold;
+    --sans-regular: regular;
+    --sans-semibold: semibold;
+    --sans-bold: bold;
     background: var(--background);
     color: var(--texto-destaque);
     color-scheme: light dark;
@@ -30,6 +30,7 @@
     -moz-osx-font-smoothing: grayscale;
     font-synthesis: none;
     text-rendering: optimizelegibility;
+    user-select: none;
     @media (width <= 1024px) {
         font-size: 16px;
     }
@@ -65,10 +66,11 @@
 /* } */
 
 
-.titulo {
+.tituloPagina {
     color: var(--texto-destaque);
     font-size: var(--titulo-de-pagina);
     font-weight: var(--sans-bold);
+ 
 }
 
 .tituloModal {
@@ -81,4 +83,23 @@
     color: var(--texto-destaque);
     font-size: var(--subtitulo);
     font-weight: var(--sans-semibold);
+}
+
+.tituloDeCampoDeTexto {
+    color: var(--texto-destaque);
+    font-size: var(--titulo-de-campo-de-texto);
+    font-weight: var(--sans-semibold);
+}
+
+
+.interiorDeCampoDeTexto {
+    color: var(--texto-destaque);
+    font-size: var(--interior-de-campo-de-texto);
+    font-weight: var(--sans-regular);
+}
+
+.textoDeBotao {
+    color: var(--texto-destaque);
+    font-size: var(--texto-de-botao);
+    font-weight: var(--sans-bold);
 }
