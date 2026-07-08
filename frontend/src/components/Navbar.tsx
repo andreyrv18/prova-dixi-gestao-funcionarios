@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import styles from "./navbar.module.css";
-import { MdBadge, MdMeetingRoom, MdPerson } from "react-icons/md";
 import LogoDixi from "../assets/Union.svg";
-import { ptBR } from "../locales/pt-BR";
+import {ptBR} from "../locales/pt-BR";
+import {AppIcons} from "./AppIcons.ts";
 
 function Navbar() {
     return (
@@ -11,20 +11,20 @@ function Navbar() {
             <hr className={styles.linha} />
 
             <Link className={styles.link} to="/funcionario">
-                <MdPerson size={40} />
+                <AppIcons.Funcionario className={styles.icons} />
                 {ptBR.navbar.funcionario}
             </Link>
             <hr className={styles.linha} />
 
             <Link className={styles.link} to="/cargo">
-                <MdBadge size={40} />
+                <AppIcons.Cargo className={styles.icons} />
                 {ptBR.navbar.cargo}
             </Link>
 
             <hr className={styles.linha} />
 
             <Link className={styles.link} to="/departamento">
-                <MdMeetingRoom size={40} />
+                <AppIcons.Departamento className={styles.icons} />
                 {ptBR.navbar.departamento}
             </Link>
         </div>

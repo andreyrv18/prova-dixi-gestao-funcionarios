@@ -13,10 +13,11 @@
     color: var(--background);
     display: flex;
     flex-direction: column;
+    gap: 1rem;
     justify-content: center;
-    padding: 5px;
     text-decoration: none;
     width: 100%;
+
 }
 
 .link img {
@@ -27,4 +28,8 @@
 
 .linha {
     width: 100%;
+}
+
+.icons {
+    font-size: 48px;
 }
