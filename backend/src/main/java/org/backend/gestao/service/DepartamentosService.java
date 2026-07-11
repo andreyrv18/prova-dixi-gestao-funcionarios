@@ -1,4 +1,40 @@
 package org.backend.gestao.service;
 
+import org.backend.gestao.model.Departamentos;
+import org.backend.gestao.repository.DepartamentosRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
 public class DepartamentosService {
+    private static final Logger log = LoggerFactory.getLogger(DepartamentosService.class);
+   private final DepartamentosRepository departamentoRepository;
+
+    public DepartamentosService(DepartamentosRepository departamentosRepository) {
+        this.departamentoRepository = departamentosRepository;
+    }
+
+    public List<Departamentos> findAllDepartamentos() {
+
+        return departamentoRepository.findAll();
+    }
+
+    public Departamentos criarDepartamento(Departamentos departamento) {
+
+       boolean codigoExiste =  departamentoRepository.existsByCodigoDepartamento(departamento.getCodigoDepartamento());
+
+        if (codigoExiste) {
+                log.warn("Usuario tentou cadastrar um departamento com código existente {}", departamento.getCodigoDepartamento());
+            throw new IllegalArgumentException("Código do departamento deve ser unico");
+
+        }
+
+        log.info("Novo departamento criado com código: {}", departamento.getCodigoDepartamento());
+            return departamentoRepository.save(departamento);
+
+
+    }
 }
