@@ -1,40 +1,54 @@
 import style from "./tabela.module.css";
-import {AppIcons} from "./AppIcons.ts";
+import {AppIcons} from "../util/AppIcons.ts";
+import {Link, useRouteLoaderData} from "react-router-dom";
+import {rotas} from "../util/rotas.ts";
 
 interface TabelaProps {
-    editar: string;
-    nome?: string;
-    cpf?: string;
-    descricao?: string;
-    codigo?: string;
-    isCabecalho?: boolean;
+    textoEditar: string;
+    tituloColuna1?: string;
+    tituloColuna2?: string;
+    routeId: string;
+    chavesDeAcesso: string[];
+    // rotaEdicao: string;
 }
 
 function Tabela({
-    editar,
-    nome,
-    cpf,
-    codigo,
-    descricao,
-    isCabecalho = true,
+    textoEditar,
+    tituloColuna1,
+    tituloColuna2,
+    routeId,
+    chavesDeAcesso,
+    // rotaEdicao,
 }: TabelaProps) {
-    const classesDaLinha = isCabecalho
-        ? `${style.linha} ${style.linhaCabecalho}`
-        : style.linha;
+    const data = useRouteLoaderData(routeId) as
+        { records: Record<string, never>[] } | undefined;
 
+    const tabelaConteudo = data?.records || [];
     return (
-        <section className={style.tabela}>
-            <section className={classesDaLinha}>
-                <p>{editar}</p>
-
-                <p>{nome || descricao}</p>
-
-                <p>{cpf || codigo}</p>
-            </section>
-            <section className={style.corpo}>
-                <AppIcons.Editar />
-            </section>
-        </section>
+        <div className={style.containerTabela}>
+            <table className={style.tabela}>
+                <thead className={style.linhaCabecalho}>
+                    <tr>
+                        <th className={style.colEditar}>{textoEditar}</th>
+                        <th>{tituloColuna1}</th>
+                        <th>{tituloColuna2}</th>
+                    </tr>
+                </thead>
+                <tbody className={style.corpo}>
+                    {tabelaConteudo.map((item, index) => (
+                        <tr className={style.linha} key={index}>
+                            <td className={style.colEditar}>
+                                <Link to={rotas.funcionarios.editar}>
+                                    <AppIcons.Editar className={style.icones} />
+                                </Link>
+                            </td>
+                            <td>{item[chavesDeAcesso[0]]}</td>
+                            <td>{item[chavesDeAcesso[1]]}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
 }
 

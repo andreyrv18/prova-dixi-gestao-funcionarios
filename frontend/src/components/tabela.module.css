@@ -1,27 +1,50 @@
-.tabela {
-    display: flex;
-    flex-direction: column;
+.containerTabela {
+    border: 1px solid var(--outline);
+    height: 100%;
+    overflow-y: auto;
     width: 100%;
 }
 
-.linha {
-    align-items: center;
-    border-bottom: 1px solid var(--outline);
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 40px 1fr 1fr;
-    padding: 8px 32px 8px 16px;
+.tabela {
+    border-collapse: collapse;
+    text-align: left;
+    width: 100%;
+
 }
 
-.linhaCabecalho {
+
+.linhaCabecalho th {
     background-color: var(--outline);
     color: var(--azul-base);
     font-weight: var(--sans-bold);
+    padding: 8px 32px 8px 16px;
+    position: sticky;
+    text-align: left;
+    top: 0;
+    z-index: 2;
+}
+
+
+.linha td {
+    border-bottom: 1px solid var(--outline);
+    padding: 8px 32px 8px 16px;
+    text-align: left;
+}
+
+.colEditar {
+    height: 40px;
+    width: 40px;
+}
+
+
+.corpo {
+    overflow-y: scroll;
+    width: 100%;
 
 }
 
-.corpo {
-    align-items: center;
-    font-size: 24px;
-    padding: 8px 32px 8px 16px;
+.icones {
+    color: var(--azul-base);
+    height: 34px;
+    width: 34px;
 }
