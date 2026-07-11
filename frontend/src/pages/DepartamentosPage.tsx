@@ -1,15 +1,16 @@
 import PaginaCabacalho from "../components/PaginaCabacalho.tsx";
-import { ptBR } from "../locales/pt-BR.ts";
-import { Card } from "../components/Card.tsx";
+import {ptBR} from "../locales/pt-BR.ts";
+import {Card} from "../components/Card.tsx";
 import Input from "../components/Input.tsx";
-import { useState } from "react";
+import {useState} from "react";
+import styles from "./pages.module.css";
 
-function DepartamentoPage() {
+function DepartamentosPage() {
     const [descricao, setDescricao] = useState("");
     const [codigo, setCodigo] = useState("");
 
     return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <section className={styles.pagina}>
             <PaginaCabacalho
                 titulo={ptBR.paginaDepartamento.listar.titulo}
                 subtitulo={ptBR.paginaDepartamento.listar.subtitulo}
@@ -49,14 +50,16 @@ function DepartamentoPage() {
                         />
                     </>
                 }
-                tabelaCabecalho={{
-                    editar: ptBR.tabela.cabecalho.editar,
-                    nome: ptBR.tabela.cabecalho.nome,
-                    cpf: ptBR.tabela.cabecalho.cpf,
+                tabelaConfig={{
+                    textoEditar: ptBR.tabela.cabecalho.editar,
+                    tituloColuna1: ptBR.tabela.cabecalho.descricao,
+                    tituloColuna2: ptBR.tabela.cabecalho.codigo,
+                    routeId: ptBR.tabela.routeId.departamentos,
+                    chavesDeAcesso: ptBR.tabela.chavesDeAcesso.departamentos,
                 }}
             ></Card>
-        </div>
+        </section>
     );
 }
 
-export default DepartamentoPage;
+export default DepartamentosPage;

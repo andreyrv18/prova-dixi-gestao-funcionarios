@@ -1,14 +1,15 @@
 import PaginaCabacalho from "../components/PaginaCabacalho.tsx";
-import {ptBR} from "../locales/pt-BR.ts";
-import {Card} from "../components/Card.tsx";
+import { ptBR } from "../locales/pt-BR.ts";
+import { Card } from "../components/Card.tsx";
 import Input from "../components/Input.tsx";
-import {useState} from "react";
+import { useState } from "react";
+import styles from "./pages.module.css";
 
-function CargoPage() {
+function CargosPage() {
     const [descricao, setDescricao] = useState("");
     const [codigo, setCodigo] = useState("");
     return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <section className={styles.pagina}>
             <PaginaCabacalho
                 titulo={ptBR.paginaCargo.listar.titulo}
                 subtitulo={ptBR.paginaCargo.listar.subtitulo}
@@ -43,14 +44,16 @@ function CargoPage() {
                         />
                     </>
                 }
-                tabelaCabecalho={{
-                    editar: ptBR.tabela.cabecalho.editar,
-                    nome: ptBR.tabela.cabecalho.nome,
-                    cpf: ptBR.tabela.cabecalho.cpf,
+                tabelaConfig={{
+                    textoEditar: ptBR.tabela.cabecalho.editar,
+                    tituloColuna1: ptBR.tabela.cabecalho.nome,
+                    tituloColuna2: ptBR.tabela.cabecalho.codigo,
+                    routeId: ptBR.tabela.routeId.cargos,
+                    chavesDeAcesso: ptBR.tabela.chavesDeAcesso.cargos,
                 }}
             ></Card>
-        </div>
+        </section>
     );
 }
 
-export default CargoPage;
+export default CargosPage;

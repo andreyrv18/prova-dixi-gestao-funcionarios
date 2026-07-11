@@ -1,6 +1,7 @@
 import {ptBR} from "../locales/pt-BR.ts";
 import {Card} from "../components/Card.tsx";
 import Input from "../components/Input.tsx";
+import styles from "./pages.module.css";
 
 import {useState} from "react";
 import PaginaCabacalho from "../components/PaginaCabacalho.tsx";
@@ -12,7 +13,7 @@ function FuncionariosPage() {
     const [empresa, setEmpresa] = useState("");
 
     return (
-        <section style={{ display: "flex", flexDirection: "column" }}>
+        <section className={styles.pagina}>
             <PaginaCabacalho
                 titulo={ptBR.paginaFuncionario.listar.titulo}
                 subtitulo={ptBR.paginaFuncionario.listar.subtitulo}
@@ -64,10 +65,12 @@ function FuncionariosPage() {
                         />
                     </>
                 }
-                tabelaCabecalho={{
-                    editar: ptBR.tabela.cabecalho.editar,
-                    nome: ptBR.tabela.cabecalho.nome,
-                    cpf: ptBR.tabela.cabecalho.cpf,
+                tabelaConfig={{
+                    textoEditar: ptBR.tabela.cabecalho.editar,
+                    tituloColuna1: ptBR.tabela.cabecalho.nome,
+                    tituloColuna2: ptBR.tabela.cabecalho.cpf,
+                    routeId: ptBR.tabela.routeId.funcionario,
+                    chavesDeAcesso: ptBR.tabela.chavesDeAcesso.funcionario,
                 }}
             ></Card>
         </section>
