@@ -76,4 +76,21 @@ public class GlobalExceptionAdvice {
         return ResponseEntity.status(status).body(error);
     }
 
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<DefaultErrorDTO> handleException(IllegalArgumentException exception, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        DefaultErrorDTO error = new DefaultErrorDTO(
+                Instant.now(),
+                status.value(),
+                "Dados inválidos",
+                exception.getMessage(),
+                request.getRequestURI()
+        );
+
+        log.warn("Usuario enviou dados inválidos na rota {}: {}", request.getRequestURI(), exception.getMessage());
+
+        return ResponseEntity.status(status).body(error);
+    }
 }
