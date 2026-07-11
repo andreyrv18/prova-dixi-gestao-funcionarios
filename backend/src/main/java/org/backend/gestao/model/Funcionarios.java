@@ -4,7 +4,6 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "funcionarios")
 public class Funcionarios {
 
     @Id
@@ -17,8 +16,17 @@ public class Funcionarios {
     @Column(name ="cpf", nullable=false, unique=true )
     private String cpf;
 
-    public  Funcionarios() {
+
+    public Funcionarios(@Nullable Long id, String nome, String cpf) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
     }
+
+    public Funcionarios() {
+
+    }
+
 
     @Nullable
     public Long getId() {
