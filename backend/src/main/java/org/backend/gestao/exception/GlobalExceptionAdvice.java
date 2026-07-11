@@ -22,7 +22,11 @@ public class GlobalExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<DefaultErrorDTO> handleNotFoundExeption(NotFoundExeption exception,HttpServletRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
+        String rota = request.getRequestURI();
 
+        if (rota.contains("swagger-ui") || rota.contains("api-docs")) {
+            throw exception;
+        }
         DefaultErrorDTO error = new DefaultErrorDTO(
                 Instant.now(),
                 status.value(),
@@ -41,8 +45,14 @@ public class GlobalExceptionAdvice {
 
     @ExceptionHandler(NoResourceFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<DefaultErrorDTO> handleException(NoResourceFoundException exception, HttpServletRequest request) {
+    public ResponseEntity<DefaultErrorDTO> handleException(NoResourceFoundException exception, HttpServletRequest request) throws Exception {
         HttpStatus status = HttpStatus.NOT_FOUND;
+        String rota = request.getRequestURI();
+
+        if (rota.contains("swagger-ui") || rota.contains("api-docs")) {
+            throw exception;
+        }
+
 
         DefaultErrorDTO error = new DefaultErrorDTO(
                 Instant.now(),

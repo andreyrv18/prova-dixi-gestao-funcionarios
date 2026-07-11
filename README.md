@@ -1,5 +1,10 @@
 # prova-dixi-gestao-funcionarios
 
+para acessar o Swagger acesse:
+
+http://localhost:8080/swagger-ui/index.html
+
+
 # Como executar o Projeto
 
 Certifique-se de que tem o [Docker](https://www.docker.com/) e o [Docker Compose](https://docs.docker.com/compose/) instalados na sua máquina.
