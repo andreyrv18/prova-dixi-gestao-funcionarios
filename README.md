@@ -1,61 +1,38 @@
 # prova-dixi-gestao-funcionarios
 
-## Requisitos Técnicos
-> Frontend
-Framework: React (desejável) ou tecnologia compatível.
-- Interface responsiva
-- Componentização
-- Boas práticas de desenvolvimento
-- Consumo da API desenvolvida
+# Como executar o Projeto
 
-> Backend
-Tecnologia: Java (desejável) ou tecnologia compatível.
-APIs REST para as três entidades com as operações:
-- Criar, Editar, Consultar (por ID)
-- Listar com filtros e paginação
-- Geração dos relatórios
+Certifique-se de que tem o [Docker](https://www.docker.com/) e o [Docker Compose](https://docs.docker.com/compose/) instalados na sua máquina.
 
-> Banco de Dados
-Modelagem completa pelo candidato.
+1. Clonando o projeto via ssh:
+ ```bash
+    git clone git@github.com:andreyrv18/prova-dixi-gestao-funcionarios.git
+```
 
-Requisitos mínimos:
-- Entidades: Funcionário, Vínculo, Cargo, Departamento
-- Relacionamentos corretos, chaves primárias e estrangeiras
-- Normalização adequada
-- Scripts de criação do banco incluídos no repositório
+2. Acesse a pasta recem clonada do github
+
+```bash
+    cd  prova-dixi-gestao-funcionarios
+```
+
+3. Após clonar o projeto vamos rodar o docker para subir os containers da aplicação
 
 
-> Testes
-Unitários
-Cobrir as principais regras de negócio, incluindo:
-- Cadastro e validação de CPF duplicado
-- Cadastro de cargo e departamento (código duplicado)
-- Criação e edição de vínculos
-- Filtros de pesquisa
+> Docker
 
->>End-to-End (Cypress)
-Cobertura obrigatória para todos os fluxos de Funcionários, Cargos e Departamentos:
-- Cadastro e edição
-- Pesquisa e paginação
-- Geração de relatório
+4. Abra o terminal e execute o comando:
+
+```bash
+    docker compose up -d --build
+```
+
+após os 3 constainers estiverem online frontend, backend, mysql
+
+acesse no seu navegador: http://localhost:5173
 
 
+# Referencias usadas no projeto
 
-> Diferenciais (bônus)
+[Validador de CPF por DevMedia](https://www.devmedia.com.br/validando-o-cpf-em-uma-aplicacao-java/22097)
 
-|       Diferencial       |        Diferencial         |
-|:-----------------------:|:--------------------------:|
-| Docker / Docker Compose |     Swagger / OpenAPI      
-|      Java e React       | Cobertura de testes > 80%  |
-| Logs estruturados | 
-| Autenticação e autorização |
-
-
-# Protótipo de Referência
-As telas foram prototipadas no Figma e devem ser usadas como referência visual para construção do frontend:
-
-> Figma  —  Clique aqui para acessar o protótipo
-
-
-
-
+[Obemep - matematica dos CPFs](https://clubes.obmep.org.br/blog/a-matematica-nos-documentos-a-matematica-dos-cpfs/)
