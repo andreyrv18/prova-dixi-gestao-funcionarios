@@ -1,8 +1,12 @@
 package org.backend.gestao.controller;
 
+import org.backend.gestao.DTO.CargosDTO;
 import org.backend.gestao.exception.NotFoundExeption;
 import org.backend.gestao.model.Cargos;
 import org.backend.gestao.service.CargosService;
+import org.backend.gestao.service.DepartamentosService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cargos")
+@CrossOrigin(origins = "http://localhost:5173")
+
 public class CargosController {
+
     private final CargosService cargosService;
 
     public CargosController(CargosService cargosService) {
@@ -21,14 +28,16 @@ public class CargosController {
 
 
     @GetMapping()
-    public ResponseEntity<List<Cargos>> consultarTodos() {
+    public ResponseEntity<List<CargosDTO>> consultarTodos() {
         List<Cargos> listaCargos = cargosService.findAll();
 
         if (listaCargos.isEmpty()) {
             throw new NotFoundExeption("Nenhum cargo encontrado");
         }
 
-        return ResponseEntity.ok().body(listaCargos);
+        List<CargosDTO> listDTO = listaCargos.stream().map(CargosDTO::new).toList();
+
+        return ResponseEntity.ok().body(listDTO);
     }
 
 //    @GetMapping("/{id}")

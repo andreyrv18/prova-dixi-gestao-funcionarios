@@ -1,5 +1,6 @@
 package org.backend.gestao.controller;
 
+import org.backend.gestao.DTO.DepartamentosDTO;
 import org.backend.gestao.exception.NotFoundExeption;
 import org.backend.gestao.model.Departamentos;
 import org.backend.gestao.service.DepartamentosService;
@@ -11,6 +12,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/departamentos")
+@CrossOrigin(origins = "http://localhost:5173")
+
 public class DepartamentoController {
     private final DepartamentosService departamentosService;
 
@@ -20,7 +23,7 @@ public class DepartamentoController {
 
 
     @GetMapping()
-    public ResponseEntity<List<Departamentos>> departamentos() {
+    public ResponseEntity<List<DepartamentosDTO>> departamentos() {
 
         List<Departamentos> listaDepartamentos = departamentosService.findAllDepartamentos();
 
@@ -28,18 +31,17 @@ public class DepartamentoController {
             throw new NotFoundExeption("Nenhum departamento encontrado");
         }
 
-        return ResponseEntity.ok().body(listaDepartamentos);
+        List<DepartamentosDTO> listDTO = listaDepartamentos.stream().map(DepartamentosDTO::new).toList();
+
+        return ResponseEntity.ok().body(listDTO);
     }
 
     @PostMapping()
-    public ResponseEntity<Departamentos> createDepartamento(@RequestBody Departamentos departamentos) {
-        Departamentos d = new Departamentos();
-        d.setDescricaoDoDepartamento(departamentos.getDescricaoDoDepartamento());
-        d.setCodigoDepartamento(departamentos.getCodigoDepartamento());
+    public ResponseEntity<Void> cadastrarDepartamento(@RequestBody DepartamentosDTO objDTO) {
+        Departamentos obj = departamentosService.fromDTO(objDTO);
+        obj = departamentosService.criarDepartamento(obj);
 
-        Departamentos departamentoCadastro = departamentosService.criarDepartamento(d);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(departamentoCadastro);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }

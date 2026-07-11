@@ -1,5 +1,6 @@
 package org.backend.gestao.controller;
 
+import org.backend.gestao.DTO.FuncionariosDTO;
 import org.backend.gestao.exception.NotFoundExeption;
 import org.backend.gestao.model.Funcionarios;
 import org.backend.gestao.service.FuncionariosService;
@@ -8,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/funcionarios")
+@CrossOrigin(origins = "http://localhost:5173")
 public class FuncionarioController {
     FuncionariosService funcionariosService;
 
@@ -19,7 +22,7 @@ public class FuncionarioController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Funcionarios>> funcionarios() {
+    public ResponseEntity<List<FuncionariosDTO>> funcionarios() {
 
         List<Funcionarios> listaFuncionarios = funcionariosService.findAllFuncionarios();
 
@@ -27,19 +30,17 @@ public class FuncionarioController {
             throw new NotFoundExeption("Nenhum funcionário encontrado");
         }
 
-        return ResponseEntity.ok().body(listaFuncionarios);
+        List<FuncionariosDTO> listDTO = listaFuncionarios.stream().map(FuncionariosDTO::new).toList();
+
+        return ResponseEntity.ok().body(listDTO);
     }
 
     @PostMapping()
-    public ResponseEntity<Funcionarios> cadastrarFuncionarios(@RequestBody Funcionarios funcionarios) {
+    public ResponseEntity<Void> cadastrarFuncionarios(@RequestBody FuncionariosDTO objDTO) {
 
-        Funcionarios f = new Funcionarios();
-        f.setNome(funcionarios.getNome());
-        f.setCpf(funcionarios.getCpf());
+        Funcionarios obj = funcionariosService.fromDTO(objDTO);
+        obj = funcionariosService.criarFuncionario(obj);
 
-        Funcionarios funcionariosCadastrado = funcionariosService.criarFuncionario(f);
-
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(funcionariosCadastrado);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
