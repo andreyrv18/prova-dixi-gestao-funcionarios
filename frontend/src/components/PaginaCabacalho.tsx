@@ -1,5 +1,5 @@
-import {ptBR} from "../locales/pt-BR.ts";
-import {AppIcons} from "./AppIcons.ts";
+import { ptBR } from "../locales/pt-BR.ts";
+import { AppIcons } from "../util/AppIcons.ts";
 import style from "./paginaCabecalho.module.css";
 
 interface PaginaCabacalhoProps {
