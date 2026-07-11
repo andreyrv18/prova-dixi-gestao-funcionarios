@@ -1,24 +1,15 @@
-import "./App.module.css";
-import { Outlet } from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import Navbar from "./components/Navbar.tsx";
 import styles from "./App.module.css";
 
 export default function App() {
     return (
-        <div className={styles.layout}>
+        <section className={styles.layout}>
             <Navbar />
-            <img src="/assets/logo.png" alt=""></img>
-            <main
-                style={{
-                    display: "flex",
-                    width: "100vw",
 
-                    justifyContent: "flex-start",
-                    padding: "2rem",
-                }}
-            >
+            <main className={styles.conteudo}>
                 <Outlet />
             </main>
-        </div>
+        </section>
     );
 }
