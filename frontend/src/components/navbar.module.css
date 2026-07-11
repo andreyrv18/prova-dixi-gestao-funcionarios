@@ -3,9 +3,11 @@
     background: var(--azul-base);
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     gap: 30px;
     height: 100vh;
-    padding: 20px;
+    padding: 8px;
+    width: 104px;
 }
 
 .link {
