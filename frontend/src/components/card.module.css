@@ -6,10 +6,10 @@
     display: flex;
     flex-direction: column;
     flex-shrink: 1;
-    height: 75vh;
+    height: 80%;
     justify-content: start;
     overflow: hidden;
-    width: 75vw;
+    width: 80vw;
 }
 
 .cardInputs {
