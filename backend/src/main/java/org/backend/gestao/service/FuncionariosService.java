@@ -1,5 +1,6 @@
 package org.backend.gestao.service;
 
+import org.backend.gestao.DTO.FuncionariosDTO;
 import org.backend.gestao.model.Funcionarios;
 import org.backend.gestao.repository.FuncionariosRepository;
 import org.backend.gestao.util.ValidaCPF;
@@ -45,7 +46,13 @@ public class FuncionariosService {
             throw new IllegalArgumentException("CPF inválido");
         }
 
+
+
         return funcionariosRepository.save(funcionarios);
 
+    }
+
+    public Funcionarios fromDTO(FuncionariosDTO objDTO) {
+        return new Funcionarios(null, objDTO.getNome(), objDTO.getCpf());
     }
 }

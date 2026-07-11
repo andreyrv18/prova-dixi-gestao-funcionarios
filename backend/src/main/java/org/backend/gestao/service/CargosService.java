@@ -1,5 +1,6 @@
 package org.backend.gestao.service;
 
+import org.backend.gestao.DTO.CargosDTO;
 import org.backend.gestao.model.Cargos;
 import org.backend.gestao.repository.CargosRepository;
 import org.slf4j.Logger;
@@ -31,5 +32,9 @@ public class CargosService {
 
         log.info("Novo cargo criado com código: {}",  cargos.getCodigoDoCargo());
         return cargosRepository.save(cargos);
+    }
+
+    public Cargos fromDTO(CargosDTO objDTO) {
+        return new Cargos(null, objDTO.getCodigoDoCargo(), objDTO.getDescricaoDoCargo());
     }
 }
