@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "cargos")
 public class Cargos {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name ="codigo_do_cargo", nullable=false, unique=true )
@@ -40,5 +40,3 @@ public class Cargos {
         this.id = id;
     }
 }
-
-

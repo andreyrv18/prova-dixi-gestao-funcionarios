@@ -8,8 +8,8 @@ import jakarta.persistence.*;
 public class Funcionarios {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private @Nullable Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private @Nullable Long id;
 
     @Column(name ="nome", nullable=false )
     private String nome;
@@ -21,11 +21,11 @@ public class Funcionarios {
     }
 
     @Nullable
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(@Nullable Integer id) {
+    public void setId(@Nullable Long id) {
         this.id = id;
     }
 
