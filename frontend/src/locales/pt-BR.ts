@@ -12,6 +12,16 @@ interface Dicionario {
             descricao: string;
             codigo: string;
         };
+        routeId: {
+            funcionario: string;
+            cargos: string;
+            departamentos: string;
+        };
+        chavesDeAcesso: {
+            funcionario: string[];
+            cargos: string[];
+            departamentos: string[];
+        };
         corpo: string;
     };
 
@@ -96,6 +106,16 @@ export const ptBR: Dicionario = {
             cpf: "Cpf",
             descricao: "Descrição",
             codigo: "Código",
+        },
+        routeId: {
+            funcionario: "rota-funcionarios",
+            cargos: "rota-cargos",
+            departamentos: "rota-departamentos",
+        },
+        chavesDeAcesso: {
+            funcionario: ["cpf", "nome"],
+            cargos: ["descricaoDoCargo", "codigoDoCargo"],
+            departamentos: ["descricaoDoDepartamento", "codigoDepartamento"],
         },
         corpo: "",
     },
