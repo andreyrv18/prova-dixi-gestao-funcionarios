@@ -1,7 +1,7 @@
-import type {Departamentos} from "../interfaces";
-import {rotas} from "../util/rotas.ts";
+import type { IDepartamentos } from "../interfaces";
+import { rotas } from "../util/rotas.ts";
 
-export const GetDepartamentos = async (): Promise<Departamentos[]> => {
+export const GetDepartamentos = async (): Promise<IDepartamentos[]> => {
     const response = await fetch(rotas.api.departamentos, {
         method: "GET",
     });

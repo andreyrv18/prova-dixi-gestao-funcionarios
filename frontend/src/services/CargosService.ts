@@ -1,7 +1,7 @@
-import type {Cargos} from "../interfaces";
-import {rotas} from "../util/rotas.ts";
+import type { ICargos } from "../interfaces";
+import { rotas } from "../util/rotas.ts";
 
-export const GetCargos = async (): Promise<Cargos[]> => {
+export const GetCargos = async (): Promise<ICargos[]> => {
     const response = await fetch(rotas.api.cargos, {
         method: "GET",
     });
