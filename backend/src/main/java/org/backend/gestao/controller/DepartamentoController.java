@@ -4,6 +4,8 @@ import org.backend.gestao.DTO.DepartamentosDTO;
 import org.backend.gestao.exception.NotFoundExeption;
 import org.backend.gestao.model.Departamentos;
 import org.backend.gestao.service.DepartamentosService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,7 @@ public class DepartamentoController {
     }
 
 
-    @GetMapping()
+    @GetMapping("/list")
     public ResponseEntity<List<DepartamentosDTO>> departamentos() {
 
         List<Departamentos> listaDepartamentos = departamentosService.findAllDepartamentos();
@@ -36,6 +38,20 @@ public class DepartamentoController {
         return ResponseEntity.ok().body(listDTO);
     }
 
+    @GetMapping()
+    public ResponseEntity<Page<DepartamentosDTO>> departamentos(Pageable pageable) {
+
+        Page<Departamentos> pageDepartamentos = departamentosService.findAllDepartamentosPage(pageable);
+
+        if (pageDepartamentos.isEmpty()) {
+            throw new NotFoundExeption("Nenhum departamento encontrado");
+        }
+
+        Page<DepartamentosDTO> pageDTO = pageDepartamentos.map(DepartamentosDTO::new);
+
+        return ResponseEntity.ok().body(pageDTO);
+    }
+
     @PostMapping()
     public ResponseEntity<Void> cadastrarDepartamento(@RequestBody DepartamentosDTO objDTO) {
         Departamentos obj = departamentosService.fromDTO(objDTO);
@@ -43,5 +59,6 @@ public class DepartamentoController {
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
 
 }

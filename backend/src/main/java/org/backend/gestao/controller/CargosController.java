@@ -4,9 +4,8 @@ import org.backend.gestao.DTO.CargosDTO;
 import org.backend.gestao.exception.NotFoundExeption;
 import org.backend.gestao.model.Cargos;
 import org.backend.gestao.service.CargosService;
-import org.backend.gestao.service.DepartamentosService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +26,9 @@ public class CargosController {
     }
 
 
-    @GetMapping()
-    public ResponseEntity<List<CargosDTO>> consultarTodos() {
-        List<Cargos> listaCargos = cargosService.findAll();
+    @GetMapping("/list")
+    public ResponseEntity<List<CargosDTO>> cargosList() {
+        List<Cargos> listaCargos = cargosService.findAllCargos();
 
         if (listaCargos.isEmpty()) {
             throw new NotFoundExeption("Nenhum cargo encontrado");
@@ -38,6 +37,19 @@ public class CargosController {
         List<CargosDTO> listDTO = listaCargos.stream().map(CargosDTO::new).toList();
 
         return ResponseEntity.ok().body(listDTO);
+    }
+
+    @GetMapping()
+    public ResponseEntity<Page<CargosDTO>> cargosPage(Pageable pageable) {
+        Page<Cargos> pageCargos = cargosService.findAllCargosPage(pageable);
+
+        if (pageCargos.isEmpty()) {
+            throw new NotFoundExeption("Nenhum cargo encontrado");
+        }
+
+        Page<CargosDTO> pageDTO = pageCargos.map(CargosDTO::new);
+
+        return ResponseEntity.ok().body(pageDTO);
     }
 
 //    @GetMapping("/{id}")

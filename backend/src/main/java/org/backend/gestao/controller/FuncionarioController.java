@@ -4,12 +4,13 @@ import org.backend.gestao.DTO.FuncionariosDTO;
 import org.backend.gestao.exception.NotFoundExeption;
 import org.backend.gestao.model.Funcionarios;
 import org.backend.gestao.service.FuncionariosService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/funcionarios")
@@ -21,8 +22,8 @@ public class FuncionarioController {
         this.funcionariosService = funcionariosService;
     }
 
-    @GetMapping()
-    public ResponseEntity<List<FuncionariosDTO>> funcionarios() {
+    @GetMapping("/list")
+    public ResponseEntity<List<FuncionariosDTO>> funcionariosList() {
 
         List<Funcionarios> listaFuncionarios = funcionariosService.findAllFuncionarios();
 
@@ -30,9 +31,39 @@ public class FuncionarioController {
             throw new NotFoundExeption("Nenhum funcionário encontrado");
         }
 
+
         List<FuncionariosDTO> listDTO = listaFuncionarios.stream().map(FuncionariosDTO::new).toList();
 
         return ResponseEntity.ok().body(listDTO);
+    }
+
+
+    @GetMapping()
+    public ResponseEntity<Page<FuncionariosDTO>> funcionariosPage(Pageable pageable) {
+
+        Page<Funcionarios> pageFuncionarios = funcionariosService.findAllFuncionariosPage(pageable);
+
+        if (pageFuncionarios.isEmpty()) {
+            throw new NotFoundExeption("Nenhum funcionário encontrado");
+        }
+
+
+        Page<FuncionariosDTO> pageDTO = pageFuncionarios.map(FuncionariosDTO::new);
+
+        return ResponseEntity.ok().body(pageDTO);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Funcionarios> findFuncionario(@PathVariable String id) {
+
+        Funcionarios find = funcionariosService.findFuncionarioByCpf(id);
+        if (find == null) {
+            throw new NotFoundExeption("Cpf não encontrado");
+        }
+
+
+        return ResponseEntity.ok().body(find);
+
     }
 
     @PostMapping()
@@ -43,4 +74,7 @@ public class FuncionarioController {
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+
+
 }
