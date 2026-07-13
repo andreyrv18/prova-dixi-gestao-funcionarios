@@ -3,8 +3,9 @@ import PaginaCabecalho from "../components/PaginaCabecalho.tsx";
 import {ptBR} from "../locales/pt-BR.ts";
 import {Card} from "../components/Card.tsx";
 import InformacoesGerais from "../components/InformacoesGerais.tsx";
-import Button from "../components/Button.tsx";
-import {AppIcons} from "../util/AppIcons.ts";
+import {rotas} from "../util/rotas.ts";
+import Input from "../components/Input.tsx";
+import BotoesPaginaEditar from "../components/BotoesPaginaEditar.tsx";
 
 export function FuncionariosEditar() {
     // const data = useLoaderData() as { records: IFuncionarios };
@@ -16,7 +17,28 @@ export function FuncionariosEditar() {
             />
 
             {/*<section className={styles.paginaEditarFuncionario}>*/}
-            <InformacoesGerais />
+            <InformacoesGerais>
+                <Input
+                    dataTest={"a"}
+                    id={ptBR.input.nomeDoFuncionario}
+                    labelName={ptBR.input.nomeDoFuncionario}
+                    name={ptBR.input.nomeDoFuncionario}
+                    onInputChange={() => ""}
+                    value={""}
+                    type={"text"}
+                    placeholder={ptBR.input.insiraONomeDoFuncionario}
+                />
+                <Input
+                    dataTest={"b"}
+                    id={ptBR.input.cpf}
+                    labelName={ptBR.input.cpf}
+                    name={ptBR.input.cpf}
+                    onInputChange={() => ""}
+                    value={""}
+                    type={"text"}
+                    placeholder={ptBR.input.mascaraCPF}
+                />
+            </InformacoesGerais>
             <Card
                 tabelaConfig={{
                     textoEditar: ptBR.tabela.cabecalho.editar,
@@ -31,16 +53,7 @@ export function FuncionariosEditar() {
                 }}
             ></Card>
             {/*</section>*/}
-            <section>
-                <Button
-                    name={ptBR.botao.cancelar}
-                    Icon={AppIcons.Fechar}
-                ></Button>
-                <Button
-                    name={ptBR.botao.salvar}
-                    Icon={AppIcons.Salvar}
-                ></Button>
-            </section>
+            <BotoesPaginaEditar navLink={rotas.funcionarios.listar} />
         </section>
     );
 }
