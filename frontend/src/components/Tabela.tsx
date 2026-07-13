@@ -38,12 +38,9 @@ function Tabela({
     let tabelaConteudo: Record<string, any>[] = [];
 
     if (data?.records) {
-        // Verifica se records já é a lista (Array) direta (Caso do GetVinculoByCpf)
         if (Array.isArray(data.records)) {
             tabelaConteudo = data.records;
-        }
-        // Se não for array, verifica se tem paginação (Caso do listar todos)
-        else if (data.records.content) {
+        } else if (data.records.content) {
             tabelaConteudo = data.records.content;
         }
     } else if (data?.content) {
@@ -63,7 +60,7 @@ function Tabela({
             <table className={style.tabela}>
                 <thead>
                     <tr className={style.empresasTh}>
-                        {tituloColuna3 !== "" ? (
+                        {tituloColuna2 !== typeof Number ? (
                             <>
                                 <th>{ptBR.tabela.cabecalho.vinculo}</th>
                                 <th className={style.empresas}>
