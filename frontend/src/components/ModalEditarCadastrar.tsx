@@ -40,29 +40,65 @@ function ModalEditarCadastrar({ isOpen, onClose, titulo }: ModalProps) {
                 <main>
                     {/* Aqui entra o conteúdo dinâmico (children) */}
                     <form>
-                        <Input
-                            id="nomeModal"
-                            labelName="Nome"
-                            name="nome"
-                            value=""
-                            onInputChange={() => {}}
-                            type="text"
-                            placeholder="s"
-                            dataTest="data-"
-                        />
+                        <div className={styles.inputLinha1}>
+                            <Input
+                                id="nomeModal"
+                                labelName={ptBR.input.nomeDaEmpresa}
+                                name={ptBR.input.nomeDaEmpresa}
+                                value=""
+                                onInputChange={() => {}}
+                                type="text"
+                                placeholder={ptBR.input.insiraONomeDaEmpresa}
+                                dataTest="data-"
+                            />
+                            <Input
+                                id="nomeModal"
+                                labelName={ptBR.input.matricula}
+                                name="nome"
+                                value=""
+                                onInputChange={() => {}}
+                                type="text"
+                                placeholder={ptBR.input.mascaraMatricula}
+                                dataTest="data-"
+                            />
+                        </div>
+                        <div className={styles.inputLinha2}>
+                            <Input
+                                id="nomeModal"
+                                labelName={ptBR.input.cargo}
+                                name="nome"
+                                value=""
+                                onInputChange={() => {}}
+                                type="text"
+                                placeholder={ptBR.input.selecioneUmaOpcao}
+                                dataTest="data-"
+                            />
+                            <Input
+                                id="nomeModal"
+                                labelName={ptBR.input.departamento}
+                                name="nome"
+                                value=""
+                                onInputChange={() => {}}
+                                type="text"
+                                placeholder={ptBR.input.selecioneUmaOpcao}
+                                dataTest="data-"
+                            />
+                        </div>
                         <br />
-                        <Button
-                            onClick={onClose}
-                            type={"button"}
-                            name={ptBR.botao.cancelar}
-                            Icon={AppIcons.Fechar}
-                        />
-                        <Button
-                            onClick={() => {}}
-                            type={"submit"}
-                            name={ptBR.botao.salvar}
-                            Icon={AppIcons.Salvar}
-                        />
+                        <div className={styles.botoes}>
+                            <Button
+                                onClick={onClose}
+                                type={"button"}
+                                name={ptBR.botao.cancelar}
+                                Icon={AppIcons.Fechar}
+                            />
+                            <Button
+                                onClick={() => {}}
+                                type={"submit"}
+                                name={ptBR.botao.salvar}
+                                Icon={AppIcons.Salvar}
+                            />
+                        </div>
                     </form>
                 </main>
             </dialog>
