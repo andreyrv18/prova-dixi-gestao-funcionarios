@@ -9,6 +9,15 @@ interface Dicionario {
         cpf: string;
         insiraONomeDoFuncionario: string;
         mascaraCPF: string;
+        nomeDaEmpresa: string;
+        matricula: string;
+        cargo: string;
+        departamento: string;
+        insiraONomeDaEmpresa: string;
+        mascaraMatricula: string;
+        selecioneUmaOpcao: string;
+        codigoDoDepartamento: string;
+        descricaoDoDepartamento: string;
     };
     card: {
         titulo: string;
@@ -120,7 +129,16 @@ export const ptBR: Dicionario = {
         nomeDoFuncionario: "Nome do Funcionário",
         cpf: "CPF",
         insiraONomeDoFuncionario: "Insira o nome do funcionário",
+        insiraONomeDaEmpresa: "Insira o nome da empresa",
+        mascaraMatricula: "0000000000",
         mascaraCPF: "000.000.000-00",
+        nomeDaEmpresa: "Nome da Empresa",
+        matricula: "Matrícula",
+        cargo: "Cargo",
+        departamento: "Departamento",
+        selecioneUmaOpcao: "Selecione Uma Opcão",
+        descricaoDoDepartamento: "Descrição do Departamento",
+        codigoDoDepartamento: "Código do Departamento",
     },
     card: {
         titulo: "Informações Gerais",

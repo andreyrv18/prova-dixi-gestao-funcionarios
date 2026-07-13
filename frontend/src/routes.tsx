@@ -12,7 +12,7 @@ import {rotas} from "./util/rotas.ts";
 import {FuncionariosEditar} from "./pages/FuncionariosEditar.tsx";
 import {GetCargos} from "./services/CargosService.ts";
 import type {ICargos, IDepartamentos, IFuncionarios, IVinculos,} from "./interfaces";
-import {GetDepartamentos} from "./services/DepartamentosService.ts";
+import {GetDepartamentoById, GetDepartamentos,} from "./services/DepartamentosService.ts";
 import CargosEditar from "./pages/CargosEditar.tsx";
 import DepartamentosEditar from "./pages/DepartamentosEditar.tsx";
 import {GetVinculoByCpf} from "./services/VinculosService.ts";
@@ -64,8 +64,15 @@ const router = createBrowserRouter([
             },
             {
                 id: "rota-departamentos-editar",
-                path: rotas.departamentos.editar,
+                path: rotas.departamentos.id,
                 element: <DepartamentosEditar />,
+                loader: async ({
+                    params,
+                }): Promise<{ records: IDepartamentos }> => {
+                    const id = params.id;
+                    if (!id) throw new Error("Id não fornecido");
+                    return { records: await GetDepartamentoById(id) };
+                },
             },
         ],
     },
