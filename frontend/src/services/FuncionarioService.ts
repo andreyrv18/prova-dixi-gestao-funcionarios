@@ -1,10 +1,45 @@
-import type { Funcionarios } from "../interfaces";
-import { API_BASE_URL } from "../util/rotas.ts";
+import type { IFuncionarios, IPageResponse } from "../interfaces";
+import { API_BASE_URL, rotas } from "../util/rotas.ts";
 
-export const GetFuncionarios = async (): Promise<Funcionarios[]> => {
-    const response = await fetch(`${API_BASE_URL}/funcionarios`, {
+export const GetFuncionariosList = async (): Promise<IFuncionarios[]> => {
+    const response = await fetch(rotas.api.funcionarios, {
         method: "GET",
     });
+
+    if (!response.ok) {
+        throw await response.json();
+    }
+
+    const dataJson = await response.json();
+    console.info(dataJson);
+    return dataJson;
+};
+
+export const GetFuncionariosPaginado = async (): Promise<
+    IPageResponse<IFuncionarios>
+> => {
+    const response = await fetch(rotas.api.funcionarios, {
+        method: "GET",
+    });
+
+    if (!response.ok) {
+        throw await response.json();
+    }
+
+    const dataJson = await response.json();
+    console.info(dataJson);
+    return dataJson;
+};
+
+export const getFuncionarioById = async (
+    id: string,
+): Promise<IFuncionarios> => {
+    const response = await fetch(`${rotas.api.funcionarios}/${id}`, {
+        method: "GET",
+    });
+    if (!response.ok) {
+        throw await response.json();
+    }
     const dataJson = await response.json();
     console.info(dataJson);
     return dataJson;
