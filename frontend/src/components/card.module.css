@@ -6,8 +6,9 @@
     display: flex;
     flex-direction: column;
     flex-shrink: 1;
-    height: 80%;
     justify-content: start;
+    max-height: 80%;
+    min-height: 20%;
     overflow: hidden;
     width: 80vw;
 }
