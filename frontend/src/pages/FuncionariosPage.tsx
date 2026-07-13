@@ -4,7 +4,8 @@ import Input from "../components/Input.tsx";
 import styles from "./pages.module.css";
 
 import {useState} from "react";
-import PaginaCabacalho from "../components/PaginaCabacalho.tsx";
+import PaginaCabecalho from "../components/PaginaCabecalho.tsx";
+import {rotas} from "../util/rotas.ts";
 
 function FuncionariosPage() {
     const [text, setText] = useState("");
@@ -14,7 +15,7 @@ function FuncionariosPage() {
 
     return (
         <section className={styles.pagina}>
-            <PaginaCabacalho
+            <PaginaCabecalho
                 titulo={ptBR.paginaFuncionario.listar.titulo}
                 subtitulo={ptBR.paginaFuncionario.listar.subtitulo}
                 nomeBotao={ptBR.botao.novoFuncionario}
@@ -71,8 +72,10 @@ function FuncionariosPage() {
                     tituloColuna2: ptBR.tabela.cabecalho.cpf,
                     routeId: ptBR.tabela.routeId.funcionario,
                     chavesDeAcesso: ptBR.tabela.chavesDeAcesso.funcionario,
+                    rotaEdicao: rotas.funcionarios.id,
+                    chaveId: "cpf",
                 }}
-            ></Card>
+            />
         </section>
     );
 }

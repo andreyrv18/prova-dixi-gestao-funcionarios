@@ -1,9 +1,10 @@
-import PaginaCabacalho from "../components/PaginaCabacalho.tsx";
+import PaginaCabecalho from "../components/PaginaCabecalho.tsx";
 import {ptBR} from "../locales/pt-BR.ts";
 import {Card} from "../components/Card.tsx";
 import Input from "../components/Input.tsx";
 import {useState} from "react";
 import styles from "./pages.module.css";
+import {rotas} from "../util/rotas.ts";
 
 function DepartamentosPage() {
     const [descricao, setDescricao] = useState("");
@@ -11,7 +12,7 @@ function DepartamentosPage() {
 
     return (
         <section className={styles.pagina}>
-            <PaginaCabacalho
+            <PaginaCabecalho
                 titulo={ptBR.paginaDepartamento.listar.titulo}
                 subtitulo={ptBR.paginaDepartamento.listar.subtitulo}
                 nomeBotao={ptBR.botao.novoDepartamento}
@@ -56,8 +57,10 @@ function DepartamentosPage() {
                     tituloColuna2: ptBR.tabela.cabecalho.codigo,
                     routeId: ptBR.tabela.routeId.departamentos,
                     chavesDeAcesso: ptBR.tabela.chavesDeAcesso.departamentos,
+                    rotaEdicao: rotas.departamentos.editar,
+                    chaveId: "",
                 }}
-            ></Card>
+            />
         </section>
     );
 }

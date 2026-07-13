@@ -1,16 +1,17 @@
-import PaginaCabacalho from "../components/PaginaCabacalho.tsx";
+import PaginaCabecalho from "../components/PaginaCabecalho.tsx";
 import { ptBR } from "../locales/pt-BR.ts";
 import { Card } from "../components/Card.tsx";
 import Input from "../components/Input.tsx";
 import { useState } from "react";
 import styles from "./pages.module.css";
+import { rotas } from "../util/rotas.ts";
 
 function CargosPage() {
     const [descricao, setDescricao] = useState("");
     const [codigo, setCodigo] = useState("");
     return (
         <section className={styles.pagina}>
-            <PaginaCabacalho
+            <PaginaCabecalho
                 titulo={ptBR.paginaCargo.listar.titulo}
                 subtitulo={ptBR.paginaCargo.listar.subtitulo}
                 nomeBotao={ptBR.botao.novoCargo}
@@ -50,6 +51,8 @@ function CargosPage() {
                     tituloColuna2: ptBR.tabela.cabecalho.codigo,
                     routeId: ptBR.tabela.routeId.cargos,
                     chavesDeAcesso: ptBR.tabela.chavesDeAcesso.cargos,
+                    rotaEdicao: rotas.cargos.editar,
+                    chaveId: "",
                 }}
             ></Card>
         </section>
