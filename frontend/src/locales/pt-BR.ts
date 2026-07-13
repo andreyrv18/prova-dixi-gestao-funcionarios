@@ -4,6 +4,15 @@ interface Dicionario {
         cargo: string;
         departamento: string;
     };
+    input: {
+        nomeDoFuncionario: string;
+        cpf: string;
+        insiraONomeDoFuncionario: string;
+        mascaraCPF: string;
+    };
+    card: {
+        titulo: string;
+    };
     tabela: {
         cabecalho: {
             editar: string;
@@ -11,9 +20,15 @@ interface Dicionario {
             cpf: string;
             descricao: string;
             codigo: string;
+            vinculo: string;
+            empresa: string;
+            matricula: string;
+            cargo: string;
+            departamento: string;
         };
         routeId: {
             funcionario: string;
+            funcionarioEditar: string;
             cargos: string;
             departamentos: string;
         };
@@ -21,7 +36,9 @@ interface Dicionario {
             funcionario: string[];
             cargos: string[];
             departamentos: string[];
+            vinculos: string[];
         };
+
         corpo: string;
     };
 
@@ -99,6 +116,15 @@ export const ptBR: Dicionario = {
         cargo: "Cargo",
         departamento: "Departamento",
     },
+    input: {
+        nomeDoFuncionario: "Nome do Funcionário",
+        cpf: "CPF",
+        insiraONomeDoFuncionario: "Insira o nome do funcionário",
+        mascaraCPF: "000.000.000-00",
+    },
+    card: {
+        titulo: "Informações Gerais",
+    },
     tabela: {
         cabecalho: {
             editar: "Editar",
@@ -106,17 +132,25 @@ export const ptBR: Dicionario = {
             cpf: "Cpf",
             descricao: "Descrição",
             codigo: "Código",
+            vinculo: "Empresas",
+            empresa: "Empresa",
+            matricula: "Matrícula",
+            cargo: "Cargo",
+            departamento: "Departamento",
         },
         routeId: {
             funcionario: "rota-funcionarios",
+            funcionarioEditar: "rota-funcionarios-editar",
             cargos: "rota-cargos",
             departamentos: "rota-departamentos",
         },
         chavesDeAcesso: {
-            funcionario: ["cpf", "nome"],
+            funcionario: ["nome", "cpf"],
             cargos: ["descricaoDoCargo", "codigoDoCargo"],
             departamentos: ["descricaoDoDepartamento", "codigoDepartamento"],
+            vinculos: ["empresa", "matricula", "cargo", "departamento"],
         },
+
         corpo: "",
     },
     botao: {
