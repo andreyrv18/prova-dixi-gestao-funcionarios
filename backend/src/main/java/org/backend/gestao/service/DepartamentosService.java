@@ -1,6 +1,7 @@
 package org.backend.gestao.service;
 
 import org.backend.gestao.DTO.DepartamentosDTO;
+import org.backend.gestao.exception.NotFoundExeption;
 import org.backend.gestao.model.Departamentos;
 import org.backend.gestao.repository.DepartamentosRepository;
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ public class DepartamentosService {
 
         return departamentoRepository.findAll();
     }
+
     public Page<Departamentos> findAllDepartamentosPage(Pageable pageable) {
 
         return departamentoRepository.findAll(pageable);
@@ -43,6 +45,16 @@ public class DepartamentosService {
 
         return departamentoRepository.save(departamento);
 
+
+    }
+
+    public Departamentos atualizarDepartamento(Departamentos departamento, Long id) {
+        return  departamentoRepository.findById(id).map(departamentoExistente -> {
+            departamentoExistente.setCodigoDepartamento(departamento.getCodigoDepartamento());
+            departamentoExistente.setDescricaoDoDepartamento(departamento.getDescricaoDoDepartamento());
+            return departamentoRepository.save(departamentoExistente);
+                }
+        ).orElseThrow(()-> new NotFoundExeption("Departamento não encontrado com o ID: "+ id));
 
     }
 

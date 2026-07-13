@@ -60,5 +60,16 @@ public class DepartamentoController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<DepartamentosDTO> atualizar( @PathVariable Long id,@RequestBody DepartamentosDTO objDTO) {
+        Departamentos obj = departamentosService.fromDTO(objDTO);
+
+        obj = departamentosService.atualizarDepartamento(obj, id);
+
+        DepartamentosDTO dtoResposta = new DepartamentosDTO(obj);
+
+    return ResponseEntity.status(HttpStatus.OK).body(dtoResposta);
+
+    }
 
 }
