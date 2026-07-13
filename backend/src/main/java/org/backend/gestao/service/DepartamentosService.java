@@ -5,6 +5,8 @@ import org.backend.gestao.model.Departamentos;
 import org.backend.gestao.repository.DepartamentosRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +23,10 @@ public class DepartamentosService {
     public List<Departamentos> findAllDepartamentos() {
 
         return departamentoRepository.findAll();
+    }
+    public Page<Departamentos> findAllDepartamentosPage(Pageable pageable) {
+
+        return departamentoRepository.findAll(pageable);
     }
 
     public Departamentos criarDepartamento(Departamentos departamento) {

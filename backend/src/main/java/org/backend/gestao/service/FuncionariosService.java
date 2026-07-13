@@ -2,10 +2,14 @@ package org.backend.gestao.service;
 
 import org.backend.gestao.DTO.FuncionariosDTO;
 import org.backend.gestao.model.Funcionarios;
+import org.backend.gestao.model.Vinculo;
 import org.backend.gestao.repository.FuncionariosRepository;
+import org.backend.gestao.repository.VinculoRepository;
 import org.backend.gestao.util.ValidaCPF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +19,7 @@ public class FuncionariosService {
     private static final Logger log = LoggerFactory.getLogger(FuncionariosService.class);
     private final FuncionariosRepository funcionariosRepository;
 
-    public FuncionariosService(FuncionariosRepository funcionariosRepository) {
+    public FuncionariosService(FuncionariosRepository funcionariosRepository ) {
         this.funcionariosRepository = funcionariosRepository;
     }
 
@@ -23,6 +27,17 @@ public class FuncionariosService {
 
         return funcionariosRepository.findAll();
     }
+
+
+    public Page<Funcionarios> findAllFuncionariosPage(Pageable pageable) {
+
+        return funcionariosRepository.findAll(pageable);
+    }
+
+    public Funcionarios findFuncionarioByCpf(String cpf) {
+      return  funcionariosRepository.findByCpf(cpf);
+    }
+
 
     public Funcionarios criarFuncionario(Funcionarios funcionarios) {
         boolean cpfExiste = funcionariosRepository.existsByCpf(funcionarios.getCpf());
@@ -52,7 +67,11 @@ public class FuncionariosService {
 
     }
 
+
+
     public Funcionarios fromDTO(FuncionariosDTO objDTO) {
         return new Funcionarios(null, objDTO.getNome(), objDTO.getCpf());
     }
+
+
 }
