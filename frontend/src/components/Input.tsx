@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./input.module.css";
 
-interface InputTypes<T extends string> {
+interface InputProps<T extends string> {
     dataTest: T;
     id: string;
     labelName: string;
@@ -21,7 +21,7 @@ function Input<T extends string>({
     value,
     type,
     placeholder,
-}: InputTypes<T>) {
+}: InputProps<T>) {
     return (
         <label htmlFor={id} className={style.label}>
             {labelName}
