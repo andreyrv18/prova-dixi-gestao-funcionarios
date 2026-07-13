@@ -1,0 +1,11 @@
+.dialog {
+    border-radius: 8px;
+    min-width: 400px;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
