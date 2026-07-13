@@ -30,7 +30,7 @@
     -moz-osx-font-smoothing: grayscale;
     font-synthesis: none;
     text-rendering: optimizelegibility;
-    user-select: none;
+    /* user-select: none; */
     @media (width <= 1024px) {
         font-size: 16px;
     }
@@ -70,7 +70,7 @@
     color: var(--texto-destaque);
     font-size: var(--titulo-de-pagina);
     font-weight: var(--sans-bold);
- 
+
 }
 
 .tituloModal {

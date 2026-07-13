@@ -6,13 +6,16 @@ import ErrorPage from "./pages/ErrorPage.tsx";
 import FuncionariosPage from "./pages/FuncionariosPage.tsx";
 import DepartamentosPage from "./pages/DepartamentosPage.tsx";
 import CargosPage from "./pages/CargosPage.tsx";
-import {GetFuncionarios} from "./services/FuncionarioService.ts";
+import {GetFuncionariosList} from "./services/FuncionarioService.ts";
 import "./index.css";
 import {rotas} from "./util/rotas.ts";
-import FuncionariosEditar from "./pages/FuncionariosEditar.tsx";
+import {FuncionariosEditar} from "./pages/FuncionariosEditar.tsx";
 import {GetCargos} from "./services/CargosService.ts";
-import type {Cargos, Departamentos, Funcionarios} from "./interfaces";
+import type {ICargos, IDepartamentos, IFuncionarios, IVinculos,} from "./interfaces";
 import {GetDepartamentos} from "./services/DepartamentosService.ts";
+import CargosEditar from "./pages/CargosEditar.tsx";
+import DepartamentosEditar from "./pages/DepartamentosEditar.tsx";
+import {GetVinculoByCpf} from "./services/VinculosService.ts";
 
 const router = createBrowserRouter([
     {
@@ -24,32 +27,45 @@ const router = createBrowserRouter([
                 id: "rota-funcionarios",
                 path: rotas.funcionarios.listar,
                 element: <FuncionariosPage />,
-                loader: async (): Promise<{ records: Funcionarios[] }> => {
-                    return { records: await GetFuncionarios() };
+                loader: async (): Promise<{ records: IFuncionarios[] }> => {
+                    return { records: await GetFuncionariosList() };
                 },
-                children: [
-                    {
-                        id: "rota-funcionarios-editar",
-                        path: rotas.funcionarios.editar,
-                        element: <FuncionariosEditar />,
-                    },
-                ],
+            },
+            {
+                id: "rota-funcionarios-editar",
+                path: rotas.funcionarios.id,
+                element: <FuncionariosEditar />,
+                loader: async ({ params }): Promise<{ records: IVinculos }> => {
+                    const id = params.id;
+                    if (!id) throw new Error("Id não fornecido");
+                    return { records: await GetVinculoByCpf(id) };
+                },
             },
             {
                 id: "rota-cargos",
                 path: rotas.cargos.listar,
                 element: <CargosPage />,
-                loader: async (): Promise<{ records: Cargos[] }> => {
+                loader: async (): Promise<{ records: ICargos[] }> => {
                     return { records: await GetCargos() };
                 },
+            },
+            {
+                id: "rota-cargos-editar",
+                path: rotas.cargos.editar,
+                element: <CargosEditar />,
             },
             {
                 id: "rota-departamentos",
                 path: rotas.departamentos.listar,
                 element: <DepartamentosPage />,
-                loader: async (): Promise<{ records: Departamentos[] }> => {
+                loader: async (): Promise<{ records: IDepartamentos[] }> => {
                     return { records: await GetDepartamentos() };
                 },
+            },
+            {
+                id: "rota-departamentos-editar",
+                path: rotas.departamentos.editar,
+                element: <DepartamentosEditar />,
             },
         ],
     },
