@@ -10,6 +10,15 @@ export const GetDepartamentos = async (): Promise<IDepartamentos[]> => {
     return dataJson;
 };
 
+export const GetDepartamentosList = async (): Promise<IDepartamentos[]> => {
+    const response = await fetch(`${rotas.api.departamentos}/list`, {
+        method: "GET",
+    });
+
+    if (!response.ok) throw await response.json();
+    return await response.json();
+};
+
 export const GetDepartamentoById = async (
     id: string,
 ): Promise<IDepartamentos> => {
@@ -26,8 +35,10 @@ export const PostDepartamentos = async (payload: object) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
     });
-
-    return await response.json();
+    if (!response.ok) {
+        throw await response.json();
+    }
+    return response.ok;
 };
 
 export const PutDepartamento = async (id: string, departamentoDTO: object) => {

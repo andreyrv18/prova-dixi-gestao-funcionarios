@@ -1,5 +1,5 @@
-import type { IFuncionarios, IPageResponse } from "../interfaces";
-import { API_BASE_URL, rotas } from "../util/rotas.ts";
+import type {IFuncionarios, IPageResponse} from "../interfaces";
+import {API_BASE_URL, rotas} from "../util/rotas.ts";
 
 export const GetFuncionariosList = async (): Promise<IFuncionarios[]> => {
     const response = await fetch(rotas.api.funcionarios, {
@@ -52,5 +52,18 @@ export const PostFuncionarios = async (payload: object) => {
         body: JSON.stringify(payload),
     });
 
+    return await response.json();
+};
+
+export const PutFuncionario = async (cpf: string, funcionarioDTO: object) => {
+    const response = await fetch(`${rotas.api.funcionarios}/${cpf}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(funcionarioDTO),
+    });
+
+    if (!response.ok) {
+        throw await response.json();
+    }
     return await response.json();
 };
