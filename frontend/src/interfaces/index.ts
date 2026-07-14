@@ -28,3 +28,13 @@ export interface IVinculos {
     funicionario: string;
     matricula: number;
 }
+
+export interface IVinculoItem {
+    id?: number | string;
+    empresa: string;
+    matricula: string;
+    cargo: string;
+    departamento: string;
+    cpf?: string;
+    [key: string]: any;
+}
