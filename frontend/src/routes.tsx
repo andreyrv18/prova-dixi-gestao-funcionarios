@@ -3,19 +3,22 @@ import ReactDOM from "react-dom/client";
 import {createBrowserRouter, RouterProvider} from "react-router";
 import App from "./App.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
-import FuncionariosPage from "./pages/FuncionariosPage.tsx";
-import DepartamentosPage from "./pages/DepartamentosPage.tsx";
-import CargosPage from "./pages/CargosPage.tsx";
-import {GetFuncionariosList} from "./services/FuncionarioService.ts";
+import FuncionariosPage from "./pages/funcionarios/FuncionariosPage.tsx";
+import DepartamentosPage from "./pages/departamentos/DepartamentosPage.tsx";
+import CargosPage from "./pages/cargos/CargosPage.tsx";
+import {getFuncionarioById, GetFuncionariosList,} from "./services/FuncionarioService.ts";
 import "./index.css";
 import {rotas} from "./util/rotas.ts";
-import {FuncionariosEditar} from "./pages/FuncionariosEditar.tsx";
-import {GetCargos} from "./services/CargosService.ts";
-import type {ICargos, IDepartamentos, IFuncionarios, IVinculos,} from "./interfaces";
+import {FuncionariosEditar} from "./pages/funcionarios/FuncionariosEditar.tsx";
+import {GetCargos, GetCargosById} from "./services/CargosService.ts";
+import type {ICargos, IDepartamentos, IFuncionarios} from "./interfaces";
 import {GetDepartamentoById, GetDepartamentos,} from "./services/DepartamentosService.ts";
-import CargosEditar from "./pages/CargosEditar.tsx";
-import DepartamentosEditar from "./pages/DepartamentosEditar.tsx";
+import CargosEditar from "./pages/cargos/CargosEditar.tsx";
+import DepartamentosEditar from "./pages/departamentos/DepartamentosEditar.tsx";
 import {GetVinculoByCpf} from "./services/VinculosService.ts";
+import FuncionariosCadastrar from "./pages/funcionarios/FuncionariosCadastrar.tsx";
+import CargosCadastrar from "./pages/cargos/CargosCadastrar.tsx";
+import DepartamentosCadastrar from "./pages/departamentos/DepartamentosCadastrar.tsx";
 
 const router = createBrowserRouter([
     {
@@ -32,13 +35,27 @@ const router = createBrowserRouter([
                 },
             },
             {
+                id: "rota-funcionarios-cadastrar",
+                path: rotas.funcionarios.cadastrar,
+                element: <FuncionariosCadastrar />,
+            },
+            {
                 id: "rota-funcionarios-editar",
                 path: rotas.funcionarios.id,
                 element: <FuncionariosEditar />,
-                loader: async ({ params }): Promise<{ records: IVinculos }> => {
-                    const id = params.id;
-                    if (!id) throw new Error("Id não fornecido");
-                    return { records: await GetVinculoByCpf(id) };
+                loader: async ({ params }): Promise<{ any }> => {
+                    const cpf = params.id;
+                    if (!cpf) throw new Error("CPF não fornecido");
+                    const [funcionario, listaVinculos] = await Promise.all([
+                        getFuncionarioById(cpf),
+                        GetVinculoByCpf(cpf),
+                    ]);
+                    return {
+                        records: {
+                            ...funcionario,
+                            vinculos: listaVinculos,
+                        },
+                    };
                 },
             },
             {
@@ -50,9 +67,19 @@ const router = createBrowserRouter([
                 },
             },
             {
+                id: "rota-cargos-cadastrar",
+                path: rotas.cargos.cadastrar,
+                element: <CargosCadastrar />,
+            },
+            {
                 id: "rota-cargos-editar",
-                path: rotas.cargos.editar,
+                path: rotas.cargos.id,
                 element: <CargosEditar />,
+                loader: async ({ params }): Promise<{ records: ICargos }> => {
+                    const id = params.id;
+                    if (!id) throw new Error("Id não fornecido");
+                    return { records: await GetCargosById(id) };
+                },
             },
             {
                 id: "rota-departamentos",
@@ -61,6 +88,11 @@ const router = createBrowserRouter([
                 loader: async (): Promise<{ records: IDepartamentos[] }> => {
                     return { records: await GetDepartamentos() };
                 },
+            },
+            {
+                id: "rota-departamentos-cadastrar",
+                path: rotas.departamentos.cadastrar,
+                element: <DepartamentosCadastrar />,
             },
             {
                 id: "rota-departamentos-editar",
