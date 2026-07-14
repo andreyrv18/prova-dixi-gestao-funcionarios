@@ -1,5 +1,5 @@
 import style from "./card.module.css";
-import React, { type PropsWithChildren } from "react";
+import React, {type PropsWithChildren} from "react";
 import Tabela from "./Tabela.tsx";
 
 interface CardProps {
@@ -13,6 +13,7 @@ interface CardProps {
         chavesDeAcesso: string[];
         rotaEdicao: string;
         chaveId: string;
+        onRowClick?: (item: any) => void;
     };
     inputs?: React.ReactNode;
 }
@@ -37,6 +38,7 @@ export function Card({
                     chavesDeAcesso={tabelaConfig.chavesDeAcesso}
                     rotaEdicao={tabelaConfig.rotaEdicao}
                     chaveId={tabelaConfig.chaveId}
+                    onRowClick={tabelaConfig.onRowClick}
                 ></Tabela>
             )}
             {children}
