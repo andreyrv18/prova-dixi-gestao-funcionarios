@@ -1,0 +1,41 @@
+
+.dialog {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+    max-width: 800px;
+    padding: 20px;
+    width: 100%;
+}
+
+.header {
+    color: #2b78c5;
+    margin-bottom: 15px;
+}
+
+.tabelaContainer {
+    border-collapse: collapse;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.tabelaHeader {
+    border-bottom: 2px solid #eee;
+    text-align: left;
+}
+
+.th {
+    color: #2b78c5;
+    padding: 10px;
+}
+
+.td {
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+}
+
+.botoesContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
