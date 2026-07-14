@@ -13,16 +13,19 @@ interface rotasProps {
         listar: string;
         editar: string;
         id: string;
+        cadastrar: string;
     };
     cargos: {
         listar: string;
         editar: string;
         id: string;
+        cadastrar: string;
     };
     departamentos: {
         listar: string;
         editar: string;
         id: string;
+        cadastrar: string;
     };
 }
 
@@ -39,16 +42,19 @@ export const rotas: rotasProps = {
         listar: "/funcionarios",
         editar: "/funcionarios/editar",
         id: "/funcionarios/:id",
+        cadastrar: "/funcionarios/cadastrar",
     },
     cargos: {
         listar: "/cargos",
         editar: "/cargos/editar",
         id: "/cargos/editar/:id",
+        cadastrar: "/cargos/cadastrar",
     },
 
     departamentos: {
         listar: "/departamentos",
         editar: "/departamentos/editar",
         id: "/departamentos/editar/:id",
+        cadastrar: "/departamentos/cadastrar",
     },
 };
