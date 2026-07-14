@@ -1,19 +1,31 @@
-import PaginaCabecalho from "../components/PaginaCabecalho.tsx";
-import {ptBR} from "../locales/pt-BR.ts";
-import styles from "./pages.module.css";
-import InformacoesGerais from "../components/InformacoesGerais.tsx";
-import Input from "../components/Input.tsx";
-import {rotas} from "../util/rotas.ts";
-import BotoesPaginaEditar from "../components/BotoesPaginaEditar.tsx";
-import {useNavigate, useParams} from "react-router-dom";
-import {useState} from "react";
-import {PutDepartamento} from "../services/DepartamentosService.ts";
+import PaginaCabecalho from "../../components/PaginaCabecalho.tsx";
+import {ptBR} from "../../locales/pt-BR.ts";
+import styles from "../pages.module.css";
+import InformacoesGerais from "../../components/InformacoesGerais.tsx";
+import Input from "../../components/Input.tsx";
+import {rotas} from "../../util/rotas.ts";
+import BotoesPaginaEditar from "../../components/BotoesPaginaEditar.tsx";
+import {useLoaderData, useNavigate, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {PutDepartamento} from "../../services/DepartamentosService.ts";
+import type {IDepartamentos} from "../../interfaces";
 
 function DepartamentosEditar() {
-    const { id } = useParams();
-    const navigate = useNavigate();
     const [descricao, setDescricao] = useState("");
-    const [codigo, setCodigo] = useState("");
+    const [codigo, setCodigo] = useState(0);
+
+    const data = useLoaderData() as { records: IDepartamentos };
+    const { id } = useParams();
+
+    const navigate = useNavigate();
+
+    const departamentoData = data?.records;
+    useEffect(() => {
+        if (departamentoData) {
+            setDescricao(departamentoData.descricaoDoDepartamento);
+            setCodigo(departamentoData.codigoDepartamento);
+        }
+    }, [departamentoData]);
 
     const handleSalvar = async () => {
         if (!id) return;
@@ -26,19 +38,18 @@ function DepartamentosEditar() {
 
             await PutDepartamento(id, departamentoDTO);
 
-            alert("Departamento atualizado com sucesso!");
             navigate(rotas.departamentos.listar);
         } catch (error) {
             console.error("Erro ao atualizar o departamento:", error);
-            alert("Falha ao salvar. Verifique a consola.");
         }
     };
+
     return (
         <section className={styles.pagina}>
             <PaginaCabecalho
-                titulo={ptBR.paginaDepartamento.listar.titulo}
-                subtitulo={ptBR.paginaDepartamento.listar.subtitulo}
-                nomeBotao={ptBR.botao.novoDepartamento}
+                titulo={ptBR.paginaDepartamento.editar.titulo}
+                subtitulo={ptBR.paginaDepartamento.editar.subtitulo}
+                // nomeBotao={ptBR.botao.novoDepartamento}
             />
             <InformacoesGerais>
                 <Input
@@ -47,8 +58,8 @@ function DepartamentosEditar() {
                     labelName={ptBR.input.descricaoDoDepartamento}
                     name="descricao"
                     onInputChange={e => setDescricao(e.target.value)}
-                    value="descricao"
-                    type={"text"}
+                    value={descricao}
+                    type="text"
                     placeholder={ptBR.input.insiraONomeDoFuncionario}
                 />
                 <Input
@@ -56,8 +67,8 @@ function DepartamentosEditar() {
                     id={ptBR.input.codigoDoDepartamento}
                     labelName={ptBR.input.codigoDoDepartamento}
                     name={ptBR.paginaDepartamento.input.nameCodigo}
-                    onInputChange={e => setCodigo(e.target.value)}
-                    value={ptBR.paginaDepartamento.input.nameCodigo}
+                    onInputChange={e => setCodigo(parseInt(e.target.value))}
+                    value={`${codigo}`}
                     type={"text"}
                     placeholder={ptBR.input.mascaraCPF}
                 />
