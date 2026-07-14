@@ -1,4 +1,4 @@
-import {isRouteErrorResponse, Link, useRouteError} from "react-router-dom";
+import { isRouteErrorResponse, Link, useRouteError } from "react-router-dom";
 
 interface ApiError {
     timestamp: string;
@@ -27,16 +27,15 @@ function ErrorPage() {
             style={{
                 display: "grid",
                 gap: "10px",
-                fontSize: "20px", // Ajustei o tamanho da fonte geral
+                fontSize: "20px",
                 alignItems: "center",
                 justifyContent: "center",
-                textAlign: "center", // Centraliza o texto
+                textAlign: "center",
                 height: "75vh",
                 overflow: "hidden",
             }}
         >
-            {/* Exibição dos dados do erro */}
-            <p
+            <div
                 style={{
                     padding: "20px",
                     border: "1px solid #ffcccc",
@@ -53,7 +52,7 @@ function ErrorPage() {
                     <strong>Caminho:</strong> {caminhoErro}
                 </p>
                 <p>{timestampErro}</p>
-            </p>
+            </div>
 
             <Link
                 to="/"
