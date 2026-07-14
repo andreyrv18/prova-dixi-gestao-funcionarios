@@ -1,12 +1,14 @@
-import PaginaCabecalho from "../components/PaginaCabecalho.tsx";
-import {ptBR} from "../locales/pt-BR.ts";
-import {Card} from "../components/Card.tsx";
-import Input from "../components/Input.tsx";
+import PaginaCabecalho from "../../components/PaginaCabecalho.tsx";
+import {ptBR} from "../../locales/pt-BR.ts";
+import {Card} from "../../components/Card.tsx";
+import Input from "../../components/Input.tsx";
 import {useState} from "react";
-import styles from "./pages.module.css";
-import {rotas} from "../util/rotas.ts";
+import styles from "../pages.module.css";
+import {rotas} from "../../util/rotas.ts";
+import {useNavigate} from "react-router-dom";
 
 function DepartamentosPage() {
+    const navigate = useNavigate();
     const [descricao, setDescricao] = useState("");
     const [codigo, setCodigo] = useState("");
 
@@ -16,6 +18,7 @@ function DepartamentosPage() {
                 titulo={ptBR.paginaDepartamento.listar.titulo}
                 subtitulo={ptBR.paginaDepartamento.listar.subtitulo}
                 nomeBotao={ptBR.botao.novoDepartamento}
+                onClicarNovo={() => navigate(rotas.departamentos.cadastrar)}
             />
             <Card
                 inputs={
@@ -57,8 +60,8 @@ function DepartamentosPage() {
                     tituloColuna2: ptBR.tabela.cabecalho.codigo,
                     routeId: ptBR.tabela.routeId.departamentos,
                     chavesDeAcesso: ptBR.tabela.chavesDeAcesso.departamentos,
-                    rotaEdicao: rotas.departamentos.editar,
-                    chaveId: "",
+                    rotaEdicao: rotas.departamentos.id,
+                    chaveId: "codigoDepartamento",
                 }}
             />
         </section>
