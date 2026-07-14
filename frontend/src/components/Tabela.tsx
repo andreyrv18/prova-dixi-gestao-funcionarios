@@ -1,10 +1,12 @@
 import style from "./tabela.module.css";
 import {AppIcons} from "../util/AppIcons.ts";
-import {Link, useRouteLoaderData} from "react-router-dom";
+import {Link, useParams, useRouteLoaderData} from "react-router-dom";
 import ModalEditarCadastrar from "./ModalEditarCadastrar.tsx";
 import {useState} from "react";
 import {ptBR} from "../locales/pt-BR.ts";
 import {formatarCPF} from "../util/formatar.ts";
+import Button from "./Button.tsx";
+import type {IVinculoItem} from "../interfaces";
 
 interface TabelaProps {
     textoEditar: string;
@@ -16,6 +18,7 @@ interface TabelaProps {
     chavesDeAcesso: string[];
     rotaEdicao: string;
     chaveId: string;
+    onRowClick?: (item: Record<string, any>) => void;
 }
 
 function Tabela({
@@ -28,12 +31,16 @@ function Tabela({
     chavesDeAcesso,
     rotaEdicao,
     chaveId,
+    onRowClick,
 }: TabelaProps) {
     const [modalAberto, setModalAberto] = useState(false);
     const [modoModal, setModoModal] = useState<"cadastrar" | "editar">(
         "cadastrar",
     );
-
+    const [itemSelecionado, setItemSelecionado] = useState<IVinculoItem | null>(
+        null,
+    );
+    const { id } = useParams();
     const data = useRouteLoaderData(routeId) as any;
     let tabelaConteudo: Record<string, any>[] = [];
 
@@ -42,6 +49,8 @@ function Tabela({
             tabelaConteudo = data.records;
         } else if (data.records.content) {
             tabelaConteudo = data.records.content;
+        } else if (data.records.vinculos) {
+            tabelaConteudo = data.records.vinculos;
         }
     } else if (data?.content) {
         tabelaConteudo = data.content;
@@ -49,6 +58,13 @@ function Tabela({
 
     const abrirModalCadastro = () => {
         setModoModal("cadastrar");
+        setItemSelecionado(null);
+        setModalAberto(true);
+    };
+
+    const abrirModalEdicao = (item: any) => {
+        setModoModal("editar");
+        setItemSelecionado(item);
         setModalAberto(true);
     };
 
@@ -59,24 +75,22 @@ function Tabela({
         <div className={style.containerTabela}>
             <table className={style.tabela}>
                 <thead>
-                    <tr className={style.empresasTh}>
-                        {tituloColuna2 !== typeof Number ? (
-                            <>
-                                <th>{ptBR.tabela.cabecalho.vinculo}</th>
-                                <th className={style.empresas}>
-                                    <button
+                    {rotaEdicao === "" && (
+                        <tr className={style.empresasTh}>
+                            <th>{ptBR.tabela.cabecalho.vinculo}</th>
+                            <th className={style.empresas}>
+                                {id && (
+                                    <Button
                                         type="button"
+                                        Icon={AppIcons.Adicionar}
+                                        name={ptBR.botao.novoVinculo}
                                         onClick={abrirModalCadastro}
-                                    >
-                                        <AppIcons.Adicionar />
-                                        {ptBR.botao.novoVinculo}
-                                    </button>
-                                </th>
-                            </>
-                        ) : (
-                            <th></th>
-                        )}
-                    </tr>
+                                    />
+                                )}
+                            </th>
+                        </tr>
+                    )}
+
                     <tr className={style.linhaCabecalho}>
                         <th className={style.colEditar}>{textoEditar}</th>
                         <th>{tituloColuna1}</th>
@@ -87,16 +101,35 @@ function Tabela({
                 </thead>
                 <tbody className={style.corpo}>
                     {tabelaConteudo.map((item, index) => (
-                        <tr className={style.linha} key={index}>
-                            <td className={style.colEditar}>
-                                <Link
-                                    to={rotaEdicao.replace(
-                                        ":id",
-                                        String(item[chaveId]),
-                                    )}
-                                >
-                                    <AppIcons.Editar className={style.icones} />
-                                </Link>
+                        <tr
+                            className={style.linha}
+                            key={index}
+                            onClick={() => onRowClick && onRowClick(item)}
+                            style={onRowClick ? { cursor: "pointer" } : {}}
+                        >
+                            <td
+                                className={style.colEditar}
+                                onClick={e => e.stopPropagation()}
+                            >
+                                {rotaEdicao !== "" ? (
+                                    <Link
+                                        to={rotaEdicao.replace(
+                                            ":id",
+                                            String(item[chaveId]),
+                                        )}
+                                    >
+                                        <AppIcons.Editar
+                                            className={style.icones}
+                                        />
+                                    </Link>
+                                ) : (
+                                    <Button
+                                        type="button"
+                                        Icon={AppIcons.Editar}
+                                        name=""
+                                        onClick={() => abrirModalEdicao(item)}
+                                    />
+                                )}
                             </td>
 
                             <td>{item[chavesDeAcesso[0]]}</td>
@@ -118,10 +151,12 @@ function Tabela({
             <ModalEditarCadastrar
                 isOpen={modalAberto}
                 onClose={() => setModalAberto(false)}
+                modo={modoModal}
+                item={itemSelecionado}
                 titulo={
                     modoModal === "cadastrar"
-                        ? "Cadastrar Novo Funcionário"
-                        : "Editar Funcionário"
+                        ? "Novo Vínculo"
+                        : "Editar Vínculo"
                 }
             />
         </div>
