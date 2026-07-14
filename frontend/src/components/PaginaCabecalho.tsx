@@ -7,12 +7,14 @@ interface PaginaCabacalhoProps {
     titulo: string;
     subtitulo: string;
     nomeBotao?: string;
+    onClicarNovo?: () => void;
 }
 
 function PaginaCabecalho({
     titulo,
     subtitulo,
     nomeBotao,
+    onClicarNovo,
 }: PaginaCabacalhoProps) {
     return (
         <div className={style.cabecalho}>
@@ -32,6 +34,7 @@ function PaginaCabecalho({
                         Icon={AppIcons.Adicionar}
                         type="button"
                         name={nomeBotao}
+                        onClick={onClicarNovo}
                     />
                 </div>
             ) : (
