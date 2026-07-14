@@ -1,7 +1,9 @@
 package org.backend.gestao.controller;
 
+import org.backend.gestao.DTO.CargosDTO;
 import org.backend.gestao.DTO.FuncionariosDTO;
 import org.backend.gestao.exception.NotFoundExeption;
+import org.backend.gestao.model.Cargos;
 import org.backend.gestao.model.Funcionarios;
 import org.backend.gestao.service.FuncionariosService;
 import org.springframework.data.domain.Page;
@@ -66,11 +68,20 @@ public class FuncionarioController {
 
     }
 
-    @PostMapping()
-    public ResponseEntity<Void> cadastrarFuncionarios(@RequestBody FuncionariosDTO objDTO) {
+    @PutMapping("/{cpf}")
+    public ResponseEntity<FuncionariosDTO> atualizar(@PathVariable String cpf, @RequestBody FuncionariosDTO funcionarioDTO) {
+        Funcionarios funcionario = funcionariosService.fromDTO(funcionarioDTO);
+        funcionario = funcionariosService.atualizarFuncionarioByCpf(funcionario, cpf);
+        FuncionariosDTO dtoResposta = new FuncionariosDTO(funcionario);
+        return ResponseEntity.status(HttpStatus.OK).body(dtoResposta);
+    }
 
-        Funcionarios obj = funcionariosService.fromDTO(objDTO);
-        obj = funcionariosService.criarFuncionario(obj);
+
+    @PostMapping()
+    public ResponseEntity<Void> cadastrarFuncionarios(@RequestBody FuncionariosDTO funcionarioDTO) {
+
+        Funcionarios funcionario = funcionariosService.fromDTO(funcionarioDTO);
+        funcionario = funcionariosService.criarFuncionario(funcionario);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

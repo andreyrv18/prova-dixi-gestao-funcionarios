@@ -3,6 +3,7 @@ package org.backend.gestao.controller;
 import org.backend.gestao.DTO.CargosDTO;
 import org.backend.gestao.exception.NotFoundExeption;
 import org.backend.gestao.model.Cargos;
+import org.backend.gestao.model.Departamentos;
 import org.backend.gestao.service.CargosService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,12 +53,25 @@ public class CargosController {
         return ResponseEntity.ok().body(pageDTO);
     }
 
-//    @GetMapping("/{id}")
-//    public Cargos consultarCargo(@PathVariable Long id) {
-//
-//        return cargosService.findById(id).orElseThrow(() -> new NotFoundExeption("Cargo", "ID", id));
-//
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Cargos> findCargo(@PathVariable String id) {
+
+        Cargos find = cargosService.findCargoByCodigo(Integer.parseInt(id));
+        if (find == null) {
+            throw new NotFoundExeption("Cpf não encontrado");
+        }
+
+        return ResponseEntity.ok().body(find);
+
+    }
+    @PutMapping("/{codigo}")
+    public ResponseEntity<CargosDTO> atualizar(@PathVariable int codigo, @RequestBody CargosDTO objDTO) {
+        Cargos obj = cargosService.fromDTO(objDTO);
+        obj = cargosService.atualizarCargoByCodigo(obj, codigo);
+        CargosDTO dtoResposta = new CargosDTO(obj);
+        return ResponseEntity.status(HttpStatus.OK).body(dtoResposta);
+    }
+
 
     @PostMapping
     public ResponseEntity<Cargos> salvarCargo(@RequestBody Cargos cargo) {

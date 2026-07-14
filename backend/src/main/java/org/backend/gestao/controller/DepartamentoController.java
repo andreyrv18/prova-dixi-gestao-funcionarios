@@ -3,6 +3,7 @@ package org.backend.gestao.controller;
 import org.backend.gestao.DTO.DepartamentosDTO;
 import org.backend.gestao.exception.NotFoundExeption;
 import org.backend.gestao.model.Departamentos;
+import org.backend.gestao.model.Funcionarios;
 import org.backend.gestao.service.DepartamentosService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,6 +53,19 @@ public class DepartamentoController {
         return ResponseEntity.ok().body(pageDTO);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Departamentos> findDepartamento(@PathVariable String id) {
+
+        Departamentos find = departamentosService.findDepartameByCodigo(Integer.parseInt(id));
+        if (find == null) {
+            throw new NotFoundExeption("Cpf não encontrado");
+        }
+
+
+        return ResponseEntity.ok().body(find);
+
+    }
+
     @PostMapping()
     public ResponseEntity<Void> cadastrarDepartamento(@RequestBody DepartamentosDTO objDTO) {
         Departamentos obj = departamentosService.fromDTO(objDTO);
@@ -61,14 +75,14 @@ public class DepartamentoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DepartamentosDTO> atualizar( @PathVariable Long id,@RequestBody DepartamentosDTO objDTO) {
+    public ResponseEntity<DepartamentosDTO> atualizar(@PathVariable int id, @RequestBody DepartamentosDTO objDTO) {
         Departamentos obj = departamentosService.fromDTO(objDTO);
 
         obj = departamentosService.atualizarDepartamento(obj, id);
 
         DepartamentosDTO dtoResposta = new DepartamentosDTO(obj);
 
-    return ResponseEntity.status(HttpStatus.OK).body(dtoResposta);
+        return ResponseEntity.status(HttpStatus.OK).body(dtoResposta);
 
     }
 
