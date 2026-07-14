@@ -1,6 +1,8 @@
 package org.backend.gestao.service;
 
 import org.backend.gestao.DTO.FuncionariosDTO;
+import org.backend.gestao.exception.NotFoundExeption;
+import org.backend.gestao.model.Cargos;
 import org.backend.gestao.model.Funcionarios;
 import org.backend.gestao.model.Vinculo;
 import org.backend.gestao.repository.FuncionariosRepository;
@@ -67,7 +69,18 @@ public class FuncionariosService {
 
     }
 
+    public Funcionarios atualizarFuncionarioByCpf(Funcionarios funcionario, String cpf) {
+        Funcionarios funcionarioExistente = funcionariosRepository.findByCpf(cpf);
 
+        if (funcionarioExistente == null) {
+            throw new NotFoundExeption("Cargo não encontrado com o código: " + cpf);
+        }
+
+        funcionarioExistente.setNome(funcionario.getNome());
+        funcionarioExistente.setCpf(funcionario.getCpf());
+
+        return funcionariosRepository.save(funcionarioExistente);
+    }
 
     public Funcionarios fromDTO(FuncionariosDTO objDTO) {
         return new Funcionarios(null, objDTO.getNome(), objDTO.getCpf());

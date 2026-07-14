@@ -3,6 +3,7 @@ package org.backend.gestao.service;
 import org.backend.gestao.DTO.DepartamentosDTO;
 import org.backend.gestao.exception.NotFoundExeption;
 import org.backend.gestao.model.Departamentos;
+import org.backend.gestao.model.Funcionarios;
 import org.backend.gestao.repository.DepartamentosRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,11 @@ public class DepartamentosService {
         return departamentoRepository.findAll(pageable);
     }
 
+    public Departamentos findDepartameByCodigo(int codigo) {
+        return departamentoRepository.findByCodigoDepartamento(codigo);
+    }
+
+
     public Departamentos criarDepartamento(Departamentos departamento) {
 
         boolean codigoExiste = departamentoRepository.existsByCodigoDepartamento(departamento.getCodigoDepartamento());
@@ -48,14 +54,17 @@ public class DepartamentosService {
 
     }
 
-    public Departamentos atualizarDepartamento(Departamentos departamento, Long id) {
-        return  departamentoRepository.findById(id).map(departamentoExistente -> {
-            departamentoExistente.setCodigoDepartamento(departamento.getCodigoDepartamento());
-            departamentoExistente.setDescricaoDoDepartamento(departamento.getDescricaoDoDepartamento());
-            return departamentoRepository.save(departamentoExistente);
-                }
-        ).orElseThrow(()-> new NotFoundExeption("Departamento não encontrado com o ID: "+ id));
 
+    public Departamentos atualizarDepartamento(Departamentos departamento, int codigo) {
+        Departamentos departamentoExistente = departamentoRepository.findByCodigoDepartamento(codigo);
+
+        if (departamentoExistente == null) {
+            throw new NotFoundExeption("Departamento não encontrado com o código: " + codigo);
+        }
+        departamentoExistente.setCodigoDepartamento(departamento.getCodigoDepartamento());
+        departamentoExistente.setDescricaoDoDepartamento(departamento.getDescricaoDoDepartamento());
+
+        return departamentoRepository.save(departamentoExistente);
     }
 
     public Departamentos fromDTO(DepartamentosDTO objDTO) {

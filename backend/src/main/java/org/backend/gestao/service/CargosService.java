@@ -1,7 +1,9 @@
 package org.backend.gestao.service;
 
 import org.backend.gestao.DTO.CargosDTO;
+import org.backend.gestao.exception.NotFoundExeption;
 import org.backend.gestao.model.Cargos;
+import org.backend.gestao.model.Departamentos;
 import org.backend.gestao.repository.CargosRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,10 @@ public class CargosService {
         return cargosRepository.findAll(pageable);
     }
 
+    public Cargos findCargoByCodigo(int codigo) {
+        return  cargosRepository.findByCodigoDoCargo(codigo);
+    }
+
     public Cargos criarCargos(Cargos cargos) {
         boolean cargoExist = cargosRepository.existsByCodigoDoCargo(cargos.getCodigoDoCargo());
         if (cargoExist) {
@@ -38,6 +44,20 @@ public class CargosService {
         log.info("Novo cargo criado com código: {}",  cargos.getCodigoDoCargo());
         return cargosRepository.save(cargos);
     }
+
+    public Cargos atualizarCargoByCodigo(Cargos cargo, int codigo) {
+        Cargos cargoExistente = cargosRepository.findByCodigoDoCargo(codigo);
+
+        if (cargoExistente == null) {
+            throw new NotFoundExeption("Cargo não encontrado com o código: " + codigo);
+        }
+
+        cargoExistente.setCodigoDoCargo(cargo.getCodigoDoCargo());
+        cargoExistente.setDescricaoDoCargo(cargo.getDescricaoDoCargo());
+
+        return cargosRepository.save(cargoExistente);
+    }
+
 
     public Cargos fromDTO(CargosDTO objDTO) {
         return new Cargos(null, objDTO.getCodigoDoCargo(), objDTO.getDescricaoDoCargo());
