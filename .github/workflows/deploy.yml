@@ -1,0 +1,26 @@
+name: Deploy to AWS EC2
+
+# Quando essa esteira vai rodar?
+on:
+  push:
+    branches:
+      - main # Só roda quando houver push na branch principal
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest # A máquina temporária que o GitHub vai nos emprestar
+
+    steps:
+      - name: Conectando na AWS e atualizando a aplicação
+        # Usamos uma action pronta da comunidade para lidar com o acesso SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USERNAME }}
+          key: ${{ secrets.AWS_SSH_KEY }}
+          script: |
+            cd ~/prova-dixi-gestao-funcionarios
+            git pull origin main
+            docker-compose up -d --build
+            docker system prune -f
