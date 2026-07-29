@@ -1,9 +1,7 @@
 package org.backend.gestao.controller;
 
-import org.backend.gestao.DTO.CargosDTO;
 import org.backend.gestao.DTO.FuncionariosDTO;
 import org.backend.gestao.exception.NotFoundExeption;
-import org.backend.gestao.model.Cargos;
 import org.backend.gestao.model.Funcionarios;
 import org.backend.gestao.service.FuncionariosService;
 import org.springframework.data.domain.Page;
@@ -16,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/funcionarios")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:3000")
 public class FuncionarioController {
     FuncionariosService funcionariosService;
 

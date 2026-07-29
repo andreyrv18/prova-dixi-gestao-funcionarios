@@ -3,7 +3,6 @@ package org.backend.gestao.controller;
 import org.backend.gestao.DTO.DepartamentosDTO;
 import org.backend.gestao.exception.NotFoundExeption;
 import org.backend.gestao.model.Departamentos;
-import org.backend.gestao.model.Funcionarios;
 import org.backend.gestao.service.DepartamentosService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/departamentos")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:3000")
 
 public class DepartamentoController {
     private final DepartamentosService departamentosService;
