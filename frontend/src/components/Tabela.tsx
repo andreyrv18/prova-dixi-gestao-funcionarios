@@ -1,12 +1,12 @@
 import style from "./tabela.module.css";
-import {AppIcons} from "../util/AppIcons.ts";
-import {Link, useParams, useRouteLoaderData} from "react-router-dom";
+import { AppIcons } from "../util/AppIcons.ts";
+import { Link, useParams, useRouteLoaderData } from "react-router-dom";
 import ModalEditarCadastrar from "./ModalEditarCadastrar.tsx";
-import {useState} from "react";
-import {ptBR} from "../locales/pt-BR.ts";
-import {formatarCPF} from "../util/formatar.ts";
+import { useState } from "react";
+import { ptBR } from "../locales/pt-BR.ts";
+import { formatarCPF } from "../util/formatar.ts";
 import Button from "./Button.tsx";
-import type {IVinculoItem} from "../interfaces";
+import type { IVinculoItem } from "../interfaces";
 
 interface TabelaProps {
     textoEditar: string;
@@ -18,7 +18,17 @@ interface TabelaProps {
     chavesDeAcesso: string[];
     rotaEdicao: string;
     chaveId: string;
-    onRowClick?: (item: Record<string, any>) => void;
+    onRowClick?: (item: Record<string, unknown>) => void;
+}
+
+interface LoaderDataResponse {
+    records?:
+        | Array<Record<string, unknown>>
+        | {
+              content?: Array<Record<string, unknown>>;
+              vinculos?: Array<Record<string, unknown>>;
+          };
+    content?: Array<Record<string, unknown>>;
 }
 
 function Tabela({
@@ -41,8 +51,8 @@ function Tabela({
         null,
     );
     const { id } = useParams();
-    const data = useRouteLoaderData(routeId) as any;
-    let tabelaConteudo: Record<string, any>[] = [];
+    const data = useRouteLoaderData(routeId) as LoaderDataResponse | undefined;
+    let tabelaConteudo: Record<string, unknown>[] = [];
 
     if (data?.records) {
         if (Array.isArray(data.records)) {
@@ -62,7 +72,7 @@ function Tabela({
         setModalAberto(true);
     };
 
-    const abrirModalEdicao = (item: any) => {
+    const abrirModalEdicao = (item: IVinculoItem) => {
         setModoModal("editar");
         setItemSelecionado(item);
         setModalAberto(true);
@@ -127,22 +137,29 @@ function Tabela({
                                         type="button"
                                         Icon={AppIcons.Editar}
                                         name=""
-                                        onClick={() => abrirModalEdicao(item)}
+                                        onClick={() =>
+                                            abrirModalEdicao(
+                                                item as unknown as IVinculoItem,
+                                            )
+                                        }
                                     />
                                 )}
                             </td>
-
-                            <td>{item[chavesDeAcesso[0]]}</td>
+                            <td>{String(item[chavesDeAcesso[0]] ?? "")}</td>
                             {hasCPF ? (
-                                <td>{formatarCPF(item[chavesDeAcesso[1]])}</td>
+                                <td>
+                                    {formatarCPF(
+                                        String(item[chavesDeAcesso[1]] ?? ""),
+                                    )}
+                                </td>
                             ) : (
-                                <td>{item[chavesDeAcesso[1]]}</td>
+                                <td>{String(item[chavesDeAcesso[1]] ?? "")}</td>
                             )}
                             {tituloColuna3 && (
-                                <td>{item[chavesDeAcesso[2]]}</td>
+                                <td>{String(item[chavesDeAcesso[2]] ?? "")}</td>
                             )}
                             {tituloColuna4 && (
-                                <td>{item[chavesDeAcesso[3]]}</td>
+                                <td>{String(item[chavesDeAcesso[3]] ?? "")}</td>
                             )}
                         </tr>
                     ))}

@@ -36,5 +36,5 @@ export interface IVinculoItem {
     cargo: string;
     departamento: string;
     cpf?: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }

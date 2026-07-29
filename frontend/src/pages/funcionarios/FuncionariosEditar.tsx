@@ -6,27 +6,22 @@ import InformacoesGerais from "../../components/InformacoesGerais.tsx";
 import { rotas } from "../../util/rotas.ts";
 import Input from "../../components/Input.tsx";
 import BotoesPaginaEditar from "../../components/BotoesPaginaEditar.tsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import type { IFuncionarios } from "../../interfaces";
 import { PutFuncionario } from "../../services/FuncionarioService.ts";
 
 export function FuncionariosEditar() {
-    const [nome, setNome] = useState("");
-    const [cpf, setCpf] = useState("");
-
     const data = useLoaderData() as { records: IFuncionarios };
+
+    const funcionarioData = data?.records;
+
+    const [nome, setNome] = useState(funcionarioData?.nome || "");
+    const [cpf, setCpf] = useState(funcionarioData?.cpf || "");
+
     const { id } = useParams();
 
     const navigate = useNavigate();
-
-    const funcionarioData = data?.records;
-    useEffect(() => {
-        if (funcionarioData) {
-            setNome(funcionarioData.nome);
-            setCpf(funcionarioData.cpf);
-        }
-    }, [funcionarioData]);
 
     const handleSalvar = async () => {
         if (!id) return;

@@ -1,16 +1,17 @@
-import {ptBR} from "../../locales/pt-BR.ts";
-import {Card} from "../../components/Card.tsx";
+import { ptBR } from "../../locales/pt-BR.ts";
+import { Card } from "../../components/Card.tsx";
 import Input from "../../components/Input.tsx";
 import styles from "../pages.module.css";
 
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import PaginaCabecalho from "../../components/PaginaCabecalho.tsx";
-import {rotas} from "../../util/rotas.ts";
-import {useNavigate} from "react-router-dom";
-import Combobox, {type SelectOption} from "../../components/Combobox.tsx";
-import {GetCargosList} from "../../services/CargosService.ts";
-import {GetDepartamentosList} from "../../services/DepartamentosService.ts";
+import { rotas } from "../../util/rotas.ts";
+import { useNavigate } from "react-router-dom";
+import Combobox, { type SelectOption } from "../../components/Combobox.tsx";
+import { GetCargosList } from "../../services/CargosService.ts";
+import { GetDepartamentosList } from "../../services/DepartamentosService.ts";
 import ModalVisualizarVinculos from "../../components/ModalVisualizarVinculos.tsx";
+import type { ICargos, IDepartamentos } from "../../interfaces";
 
 function FuncionariosPage() {
     const navigate = useNavigate();
@@ -29,9 +30,12 @@ function FuncionariosPage() {
 
     const [modalVinculosAberto, setModalVinculosAberto] = useState(false);
     const [cpfSelecionado, setCpfSelecionado] = useState("");
-    const handleRowClick = (item: any) => {
-        setCpfSelecionado(item.cpf);
-        setModalVinculosAberto(true);
+
+    const handleRowClick = (item: Record<string, unknown>) => {
+        if (typeof item.cpf === "string") {
+            setCpfSelecionado(item.cpf);
+            setModalVinculosAberto(true);
+        }
     };
     useEffect(() => {
         const carregarListas = async () => {
@@ -40,23 +44,25 @@ function FuncionariosPage() {
                 const listaDepartamentos = await GetDepartamentosList();
 
                 setOpcoesCargos(
-                    listaCargos.map((c: any) => ({
-                        value: c.id || c.codigoCargo || c.codigoDoCargo,
-                        label: c.descricaoDoCargo,
+                    (listaCargos as ICargos[]).map(c => ({
+                        value: c.codigoDoCargo || "",
+                        label: c.descricaoDoCargo || "",
                     })),
                 );
 
                 setOpcoesDepartamentos(
-                    listaDepartamentos.map((d: any) => ({
-                        value: d.id || d.codigoDepartamento,
-                        label: d.descricaoDoDepartamento,
+                    (listaDepartamentos as IDepartamentos[]).map(d => ({
+                        value: d.codigoDepartamento || "",
+                        label: d.descricaoDoDepartamento || "",
                     })),
                 );
             } catch (error) {
                 console.error("Erro ao buscar cargos/departamentos:", error);
             }
         };
-        carregarListas();
+        carregarListas().catch(err => {
+            console.error("Erro ao buscar cargos/departamentos: ", err);
+        });
     }, []);
     return (
         <section className={styles.pagina}>

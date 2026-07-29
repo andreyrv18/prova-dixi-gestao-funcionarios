@@ -1,7 +1,8 @@
-import {useEffect, useRef, useState} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./modalVisualizarVinculos.module.css";
 import Button from "./Button.tsx";
 import {GetVinculoByCpf} from "../services/VinculosService.ts";
+import type { IVinculos } from "../interfaces";
 
 interface ModalVisualizarVinculosProps {
     isOpen: boolean;
@@ -15,10 +16,12 @@ function ModalVisualizarVinculos({
     cpf,
 }: ModalVisualizarVinculosProps) {
     const dialogRef = useRef<HTMLDialogElement>(null);
-    const [vinculos, setVinculos] = useState<any[]>([]);
+    const [vinculos, setVinculos] = useState<IVinculos[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const carregarVinculos = async () => {
+
+    const carregarVinculos = useCallback( async() => {
+        if (!cpf) return;
         setLoading(true);
         try {
             const dados = await GetVinculoByCpf(cpf);
@@ -29,16 +32,33 @@ function ModalVisualizarVinculos({
         } finally {
             setLoading(false);
         }
-    };
+    },[cpf]);
+
+
     useEffect(() => {
+
+        const dialogElement = dialogRef.current;
+
         if (isOpen) {
-            dialogRef.current?.showModal();
-            if (cpf) carregarVinculos();
+            dialogElement?.showModal();
+
+            const timer = setTimeout(()=>{
+            carregarVinculos().catch((err)=> {
+                console.error('"Erro ao carregar vínculos no efeito:"', err);
+            });
+
+            },0);
+            return ()=> clearTimeout(timer);
         } else {
-            dialogRef.current?.close();
-            setVinculos([]);
+            dialogElement?.close();
         }
-    }, [isOpen, cpf]);
+    }, [isOpen, carregarVinculos]);
+
+
+    const handleFechar = () => {
+        setVinculos([]);
+        onClose();
+    };
 
     return (
         <dialog className={styles.dialog} ref={dialogRef}>
@@ -79,7 +99,11 @@ function ModalVisualizarVinculos({
                     </table>
                 )}
                 <div className={styles.botoesContainer}>
-                    <Button onClick={onClose} type="button" name="Fechar" />
+                    <Button
+                        onClick={handleFechar}
+                        type="button"
+                        name="Fechar"
+                    />
                 </div>
             </main>
         </dialog>

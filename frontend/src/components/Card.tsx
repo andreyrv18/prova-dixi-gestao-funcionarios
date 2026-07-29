@@ -13,7 +13,7 @@ interface CardProps {
         chavesDeAcesso: string[];
         rotaEdicao: string;
         chaveId: string;
-        onRowClick?: (item: any) => void;
+        onRowClick?: (item: Record<string, unknown>) => void;
     };
     inputs?: React.ReactNode;
 }

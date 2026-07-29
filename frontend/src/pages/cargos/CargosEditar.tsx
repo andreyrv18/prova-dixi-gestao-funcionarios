@@ -1,14 +1,14 @@
 import Input from "../../components/Input.tsx";
-import {ptBR} from "../../locales/pt-BR.ts";
-import {useEffect, useState} from "react";
+import { ptBR } from "../../locales/pt-BR.ts";
+import { useState } from "react";
 import PaginaCabecalho from "../../components/PaginaCabecalho.tsx";
 import styles from "../pages.module.css";
 import InformacoesGerais from "../../components/InformacoesGerais.tsx";
-import {rotas} from "../../util/rotas.ts";
+import { rotas } from "../../util/rotas.ts";
 import BotoesPaginaEditar from "../../components/BotoesPaginaEditar.tsx";
-import {useLoaderData, useNavigate, useParams} from "react-router-dom";
-import type {ICargos} from "../../interfaces";
-import {PutCargo} from "../../services/CargosService.ts";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import type { ICargos } from "../../interfaces";
+import { PutCargo } from "../../services/CargosService.ts";
 
 function CargosEditar() {
     const { id } = useParams();
@@ -16,15 +16,10 @@ function CargosEditar() {
     const data = useLoaderData() as { records: ICargos };
     const cargoData = data?.records;
 
-    const [descricao, setDescricao] = useState("");
-    const [codigo, setCodigo] = useState(0);
-
-    useEffect(() => {
-        if (cargoData) {
-            setDescricao(cargoData.descricaoDoCargo || "");
-            setCodigo(cargoData.codigoDoCargo);
-        }
-    }, [cargoData]);
+    const [descricao, setDescricao] = useState(
+        cargoData?.descricaoDoCargo || "",
+    );
+    const [codigo, setCodigo] = useState(cargoData?.codigoDoCargo || 0);
 
     const handleSalvar = async () => {
         if (!id) return;
@@ -47,7 +42,6 @@ function CargosEditar() {
             <PaginaCabecalho
                 titulo={ptBR.paginaCargo.editar.titulo}
                 subtitulo={ptBR.paginaCargo.editar.subtitulo}
-                // nomeBotao={ptBR.botao.novoCargo}
             />
             <InformacoesGerais>
                 <Input

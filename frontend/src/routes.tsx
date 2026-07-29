@@ -10,8 +10,13 @@ import {getFuncionarioById, GetFuncionariosList,} from "./services/FuncionarioSe
 import "./index.css";
 import {rotas} from "./util/rotas.ts";
 import {FuncionariosEditar} from "./pages/funcionarios/FuncionariosEditar.tsx";
-import {GetCargos, GetCargosById} from "./services/CargosService.ts";
-import type {ICargos, IDepartamentos, IFuncionarios} from "./interfaces";
+import { GetCargos, GetCargosById } from "./services/CargosService.ts";
+import type {
+    ICargos,
+    IDepartamentos,
+    IFuncionarios,
+    IVinculoItem,
+} from "./interfaces";
 import {GetDepartamentoById, GetDepartamentos,} from "./services/DepartamentosService.ts";
 import CargosEditar from "./pages/cargos/CargosEditar.tsx";
 import DepartamentosEditar from "./pages/departamentos/DepartamentosEditar.tsx";
@@ -19,6 +24,11 @@ import {GetVinculoByCpf} from "./services/VinculosService.ts";
 import FuncionariosCadastrar from "./pages/funcionarios/FuncionariosCadastrar.tsx";
 import CargosCadastrar from "./pages/cargos/CargosCadastrar.tsx";
 import DepartamentosCadastrar from "./pages/departamentos/DepartamentosCadastrar.tsx";
+
+interface IFuncionarioComVinculos extends IFuncionarios{
+    vinculos?: IVinculoItem[];
+}
+
 
 const router = createBrowserRouter([
     {
@@ -43,7 +53,9 @@ const router = createBrowserRouter([
                 id: "rota-funcionarios-editar",
                 path: rotas.funcionarios.id,
                 element: <FuncionariosEditar />,
-                loader: async ({ params }): Promise<{ any }> => {
+                loader: async ({
+                    params,
+                }): Promise<{ records: IFuncionarioComVinculos }> => {
                     const cpf = params.id;
                     if (!cpf) throw new Error("CPF não fornecido");
                     const [funcionario, listaVinculos] = await Promise.all([
@@ -53,7 +65,7 @@ const router = createBrowserRouter([
                     return {
                         records: {
                             ...funcionario,
-                            vinculos: listaVinculos,
+                            vinculos: Array.isArray(listaVinculos) ? listaVinculos : [],
                         },
                     };
                 },

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./modalEditarCadastrar.module.css";
 import Button from "./Button.tsx";
 import { ptBR } from "../locales/pt-BR.ts";
@@ -9,13 +9,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PostVinculo, PutVinculo } from "../services/VinculosService.ts";
 import { GetCargosList } from "../services/CargosService.ts";
 import { GetDepartamentosList } from "../services/DepartamentosService.ts";
+import type { IVinculoItem } from "../interfaces";
 
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     titulo: string;
     modo: "cadastrar" | "editar";
-    item?: any;
+    item?: IVinculoItem | null;
 }
 
 function ModalEditarCadastrar({
@@ -38,50 +39,65 @@ function ModalEditarCadastrar({
     const [opcoesDepartamentos, setOpcoesDepartamentos] = useState<
         SelectOption[]
     >([]);
+
     useEffect(() => {
         const carregarListas = async () => {
             try {
                 const listaCargos = await GetCargosList();
                 const listaDepartamentos = await GetDepartamentosList();
 
-                setOpcoesCargos(
-                    listaCargos.map((c: any) => ({
-                        value: c.id || c.codigoCargo || c.codigoDoCargo,
-                        label: c.descricaoDoCargo,
-                    })),
-                );
+                const cargosFormatados: SelectOption[] = listaCargos.map(c => ({
+                    value: c.codigoDoCargo || "",
 
-                setOpcoesDepartamentos(
-                    listaDepartamentos.map((d: any) => ({
-                        value: d.id || d.codigoDepartamento,
-                        label: d.descricaoDoDepartamento,
-                    })),
-                );
+                    label: c.descricaoDoCargo || "",
+                }));
+
+                const departamentosFormatados: SelectOption[] =
+                    listaDepartamentos.map(d => ({
+                        value: d.codigoDepartamento || "",
+                        label: d.descricaoDoDepartamento || "",
+                    }));
+
+                setOpcoesCargos(cargosFormatados);
+
+                setOpcoesDepartamentos(departamentosFormatados);
             } catch (error) {
                 console.error("Erro ao buscar cargos/departamentos:", error);
             }
         };
-        carregarListas();
+        carregarListas().catch(err => {
+            console.error("Erro ao carregar listas", err);
+        });
     }, []);
 
-    useEffect(() => {
-        if (isOpen) {
-            dialogRef.current?.showModal();
-            if (modo === "editar" && item) {
-                setEmpresa(item.empresa || "");
-                setMatricula(item.matricula || "");
-                setCargoId(item.cargoId || "");
-                setDepartamentoId(item.departamentoId || "");
-            } else {
-                setEmpresa("");
-                setMatricula("");
-                setCargoId("");
-                setDepartamentoId("");
-            }
+    const atualizarCamposFormulario = useCallback(() => {
+        if (modo === "editar" && item) {
+            setEmpresa(item.empresa || "");
+            setMatricula(item.matricula || "");
+            setCargoId(item.cargo || "");
+            setDepartamentoId(item.departamento || "");
         } else {
-            dialogRef.current?.close();
+            setEmpresa("");
+            setMatricula("");
+            setCargoId("");
+            setDepartamentoId("");
         }
-    }, [isOpen, item, modo]);
+    }, [modo, item]);
+
+    useEffect(() => {
+        const dialogElement = dialogRef.current;
+
+        if (isOpen) {
+            dialogElement?.showModal();
+
+            const timer = setTimeout(() => {
+                atualizarCamposFormulario();
+            }, 0);
+            return () => clearTimeout(timer);
+        } else {
+            dialogElement?.close();
+        }
+    }, [isOpen, atualizarCamposFormulario]);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDialogElement>) => {
         if (e.key === "Escape") {
@@ -104,7 +120,7 @@ function ModalEditarCadastrar({
             if (modo === "cadastrar") {
                 await PostVinculo(payload);
             } else {
-                await PutVinculo(item.id, payload);
+                if (item?.id) await PutVinculo(item.id, payload);
             }
 
             onClose();
