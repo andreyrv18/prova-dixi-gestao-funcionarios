@@ -43,9 +43,12 @@ public class FuncionarioController {
 
         Page<Funcionarios> pageFuncionarios = funcionariosService.findAllFuncionariosPage(pageable);
 
-        if (pageFuncionarios.isEmpty()) {
-            throw new NotFoundExeption("Nenhum funcionário encontrado");
-        }
+
+//
+//      Removido pois na Aws ele gera um erro.
+//        if (pageFuncionarios.isEmpty()) {
+//            throw new NotFoundExeption("Nenhum funcionário encontrado");
+//        }
 
 
         Page<FuncionariosDTO> pageDTO = pageFuncionarios.map(FuncionariosDTO::new);
