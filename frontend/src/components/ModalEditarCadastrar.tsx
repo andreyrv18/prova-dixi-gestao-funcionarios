@@ -47,15 +47,15 @@ function ModalEditarCadastrar({
                 const listaDepartamentos = await GetDepartamentosList();
 
                 const cargosFormatados: SelectOption[] = listaCargos.map(c => ({
-                    value: c.codigoDoCargo || "",
+                    value: String(c.codigoDoCargo || ""),
 
-                    label: c.descricaoDoCargo || "",
+                    label: String(c.descricaoDoCargo || ""),
                 }));
 
                 const departamentosFormatados: SelectOption[] =
                     listaDepartamentos.map(d => ({
-                        value: d.codigoDepartamento || "",
-                        label: d.descricaoDoDepartamento || "",
+                        value: String(d.codigoDepartamento || ""),
+                        label: String(d.descricaoDoDepartamento || ""),
                     }));
 
                 setOpcoesCargos(cargosFormatados);
@@ -112,8 +112,8 @@ function ModalEditarCadastrar({
             const payload = {
                 empresa,
                 matricula,
-                cargoId,
-                departamentoId,
+                cargoId: Number(cargoId),
+                departamentoId: Number(departamentoId) ,
                 cpfFuncionario,
             };
 
