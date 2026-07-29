@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/funcionarios")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://provadixi.andreyrv.dev.br"})
 public class FuncionarioController {
     FuncionariosService funcionariosService;
 
@@ -83,7 +83,6 @@ public class FuncionarioController {
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
 
 
 }

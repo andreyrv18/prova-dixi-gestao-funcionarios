@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/log")
-@CrossOrigin(origins = "http://localhost:3000")
-
+@CrossOrigin(origins = {"http://localhost:3000", "https://provadixi.andreyrv.dev.br"})
 public class LogController {
 
     private static final Logger logger = LoggerFactory.getLogger(LogController.class);

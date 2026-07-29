@@ -14,8 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cargos")
-@CrossOrigin(origins = "http://localhost:3000")
-
+@CrossOrigin(origins = {"http://localhost:3000", "https://provadixi.andreyrv.dev.br"})
 public class CargosController {
 
     private final CargosService cargosService;

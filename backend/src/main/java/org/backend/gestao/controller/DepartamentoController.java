@@ -14,8 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/departamentos")
-@CrossOrigin(origins = "http://localhost:3000")
-
+@CrossOrigin(origins = {"http://localhost:3000", "https://provadixi.andreyrv.dev.br"})
 public class DepartamentoController {
     private final DepartamentosService departamentosService;
 
